@@ -1,4 +1,0 @@
-class Main {
-    abstract void foo(); // should pass PA1
-    static void main() { }
-}
