@@ -88,7 +88,6 @@ macro_rules! print_enum {
 
 // self.class[0] must be valid, because parser requires their are at least one class
 print_struct!(Program<'_>, self, self.class[0].loc, TopLevel, self.class);
-// print_struct!(ClassDef<'_>, self, self.loc, ClassDef, self.abstract_str() self.name self.parent self.field);
 print_struct!(VarDef<'_>, self, self.loc, LocalVarDef, self.syn_ty self.name self.init());
 print_struct!(Block<'_>, self, self.loc, Block, self.stmt);
 

@@ -60,6 +60,7 @@ priority = [
 
 [lexical]
 'void' = 'Void'
+'var' = 'Var'
 'int' = 'Int'
 'bool' = 'Bool'
 'string' = 'String'
@@ -164,7 +165,7 @@ impl<'p> Parser<'p> {
   // the `VarDef` in grammar only supports VarDef without init value
   #[rule(VarDef -> Type Id)]
   fn var_def(&self, syn_ty: SynTy<'p>, name: Token) -> &'p VarDef<'p> {
-    self.alloc.var.alloc(VarDef { loc: name.loc(), name: name.str(), syn_ty, init: None, ty: dft(), owner: dft() })
+    self.alloc.var.alloc(VarDef { loc: name.loc(), name: name.str(), syn_ty: Some(syn_ty), init: None, ty: dft(), owner: dft() })
   }
 
   #[rule(VarDefListOrEmpty -> VarDefList)]
@@ -220,10 +221,15 @@ impl<'p> Parser<'p> {
   fn simple_assign(dst: Expr<'p>, a: Token, src: Expr<'p>) -> Stmt<'p> { mk_stmt(a.loc(), Assign { dst, src }.into()) }
   #[rule(Simple -> VarDef)] // the VarDef without init
   fn simple_var_def(v: &'p VarDef<'p>) -> Stmt<'p> { mk_stmt(v.loc, v.into()) }
+  #[rule(Simple -> Var Id Assign Expr)] // the VarDef with init
+  fn simple_var_def_init_var(&self, _v: Token, name: Token, a: Token, init: Expr<'p>) -> Stmt<'p> {
+    let loc = name.loc();
+    mk_stmt(loc, (&*self.alloc.var.alloc(VarDef { loc, name: name.str(), syn_ty: None, init: Some((a.loc(), init)), ty: dft(), owner: dft() })).into())
+  }
   #[rule(Simple -> Type Id Assign Expr)] // the VarDef with init
   fn simple_var_def_init(&self, syn_ty: SynTy<'p>, name: Token, a: Token, init: Expr<'p>) -> Stmt<'p> {
     let loc = name.loc();
-    mk_stmt(loc, (&*self.alloc.var.alloc(VarDef { loc, name: name.str(), syn_ty, init: Some((a.loc(), init)), ty: dft(), owner: dft() })).into())
+    mk_stmt(loc, (&*self.alloc.var.alloc(VarDef { loc, name: name.str(), syn_ty: Some(syn_ty), init: Some((a.loc(), init)), ty: dft(), owner: dft() })).into())
   }
   #[rule(Simple -> Expr)]
   fn simple_mk_expr(e: Expr<'p>) -> Stmt<'p> { mk_stmt(e.loc, e.into()) }
