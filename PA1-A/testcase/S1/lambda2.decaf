@@ -1,0 +1,13 @@
+// lambda parameter passing
+
+class Main {
+    static void apply(int(int) f, int x) {
+        Print(f(x));
+    }
+    static void main() {
+        var y = 0;
+        var f = fun (int x) => x + 1;
+        apply(f, 12);
+        apply(f, 13);
+    }
+}

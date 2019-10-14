@@ -1,0 +1,584 @@
+TopLevel @ (3,1)
+    List
+        ClassDef @ (3,1)
+            Main
+            <none>
+            List
+                MethodDef @ (5,17)
+                    STATIC
+                    main
+                    TVoid @ (5,12)
+                    List
+                        <empty>
+                    Block @ (5,24)
+                        List
+                            ExprEval @ (6,35)
+                                Call @ (6,35)
+                                    VarSel @ (6,30)
+                                        Call @ (6,26)
+                                            VarSel @ (6,22)
+                                                NewClass @ (6,9)
+                                                    NQueue
+                                                init
+                                            List
+                                                IntLit @ (6,27)
+                                                    8
+                                        solve
+                                    List
+                                        <empty>
+        ClassDef @ (10,1)
+            NQueues
+            <none>
+            List
+                VarDef @ (11,9)
+                    TInt @ (11,5)
+                    N
+                    <none>
+                VarDef @ (12,11)
+                    TArray @ (12,5)
+                        TInt @ (12,5)
+                    col
+                    <none>
+                VarDef @ (13,11)
+                    TArray @ (13,5)
+                        TInt @ (13,5)
+                    row
+                    <none>
+                VarDef @ (14,11)
+                    TArray @ (14,5)
+                        TInt @ (14,5)
+                    di1
+                    <none>
+                VarDef @ (15,11)
+                    TArray @ (15,5)
+                        TInt @ (15,5)
+                    di2
+                    <none>
+                MethodDef @ (18,19)
+                    init
+                    TClass @ (18,5)
+                        NQueues
+                    List
+                        LocalVarDef @ (18,28)
+                            TInt @ (18,24)
+                            n
+                            <none>
+                    Block @ (18,31)
+                        List
+                            Assign @ (19,11)
+                                VarSel @ (19,9)
+                                    <none>
+                                    N
+                                VarSel @ (19,13)
+                                    <none>
+                                    n
+                            Assign @ (20,13)
+                                VarSel @ (20,9)
+                                    <none>
+                                    col
+                                Call @ (20,25)
+                                    VarSel @ (20,15)
+                                        <none>
+                                        clearArray
+                                    List
+                                        NewArray @ (20,26)
+                                            TInt @ (20,30)
+                                            VarSel @ (20,34)
+                                                <none>
+                                                N
+                            Assign @ (21,13)
+                                VarSel @ (21,9)
+                                    <none>
+                                    row
+                                Call @ (21,25)
+                                    VarSel @ (21,15)
+                                        <none>
+                                        clearArray
+                                    List
+                                        NewArray @ (21,26)
+                                            TInt @ (21,30)
+                                            VarSel @ (21,34)
+                                                <none>
+                                                N
+                            Assign @ (22,13)
+                                VarSel @ (22,9)
+                                    <none>
+                                    di1
+                                Call @ (22,25)
+                                    VarSel @ (22,15)
+                                        <none>
+                                        clearArray
+                                    List
+                                        NewArray @ (22,26)
+                                            TInt @ (22,30)
+                                            VarSel @ (22,34)
+                                                <none>
+                                                N
+                            Assign @ (23,13)
+                                VarSel @ (23,9)
+                                    <none>
+                                    di2
+                                Call @ (23,25)
+                                    VarSel @ (23,15)
+                                        <none>
+                                        clearArray
+                                    List
+                                        NewArray @ (23,26)
+                                            TInt @ (23,30)
+                                            VarSel @ (23,34)
+                                                <none>
+                                                N
+                            Return @ (25,9)
+                                This @ (25,16)
+                MethodDef @ (29,10)
+                    solve
+                    TVoid @ (29,5)
+                    List
+                        <empty>
+                    Block @ (29,18)
+                        List
+                            ExprEval @ (30,12)
+                                Call @ (30,12)
+                                    VarSel @ (30,9)
+                                        <none>
+                                        try
+                                    List
+                                        IntLit @ (30,13)
+                                            0
+                                        VarSel @ (30,16)
+                                            <none>
+                                            col
+                                        VarSel @ (30,21)
+                                            <none>
+                                            row
+                                        VarSel @ (30,26)
+                                            <none>
+                                            di1
+                                        VarSel @ (30,31)
+                                            <none>
+                                            di2
+                MethodDef @ (34,11)
+                    clearArray
+                    TArray @ (34,5)
+                        TInt @ (34,5)
+                    List
+                        LocalVarDef @ (34,28)
+                            TArray @ (34,22)
+                                TInt @ (34,22)
+                            a
+                            <none>
+                    Block @ (34,31)
+                        List
+                            LocalVarDef @ (35,13)
+                                TInt @ (35,9)
+                                i
+                                Binary @ (35,28)
+                                    SUB
+                                    Call @ (35,25)
+                                        VarSel @ (35,19)
+                                            VarSel @ (35,17)
+                                                <none>
+                                                a
+                                            length
+                                        List
+                                            <empty>
+                                    IntLit @ (35,30)
+                                        1
+                            While @ (36,9)
+                                Binary @ (36,18)
+                                    GE
+                                    VarSel @ (36,16)
+                                        <none>
+                                        i
+                                    IntLit @ (36,21)
+                                        0
+                                Block @ (36,24)
+                                    List
+                                        Assign @ (37,18)
+                                            IndexSel @ (37,14)
+                                                VarSel @ (37,13)
+                                                    <none>
+                                                    a
+                                                VarSel @ (37,15)
+                                                    <none>
+                                                    i
+                                            IntLit @ (37,20)
+                                                0
+                            Return @ (40,9)
+                                VarSel @ (40,16)
+                                    <none>
+                                    a
+                MethodDef @ (44,10)
+                    printBoard
+                    TVoid @ (44,5)
+                    List
+                        LocalVarDef @ (44,27)
+                            TArray @ (44,21)
+                                TInt @ (44,21)
+                            col
+                            <none>
+                        LocalVarDef @ (44,36)
+                            TInt @ (44,32)
+                            N
+                            <none>
+                    Block @ (44,39)
+                        List
+                            LocalVarDef @ (45,13)
+                                TInt @ (45,9)
+                                i
+                                IntLit @ (45,17)
+                                    0
+                            While @ (47,9)
+                                Binary @ (47,18)
+                                    LT
+                                    VarSel @ (47,16)
+                                        <none>
+                                        i
+                                    VarSel @ (47,20)
+                                        <none>
+                                        N
+                                Block @ (47,23)
+                                    List
+                                        LocalVarDef @ (48,17)
+                                            TInt @ (48,13)
+                                            j
+                                            IntLit @ (48,21)
+                                                0
+                                        While @ (49,13)
+                                            Binary @ (49,22)
+                                                LT
+                                                VarSel @ (49,20)
+                                                    <none>
+                                                    j
+                                                VarSel @ (49,24)
+                                                    <none>
+                                                    N
+                                            Block @ (49,27)
+                                                List
+                                                    If @ (50,17)
+                                                        Binary @ (50,28)
+                                                            EQ
+                                                            IndexSel @ (50,24)
+                                                                VarSel @ (50,21)
+                                                                    <none>
+                                                                    col
+                                                                VarSel @ (50,25)
+                                                                    <none>
+                                                                    i
+                                                            VarSel @ (50,31)
+                                                                <none>
+                                                                j
+                                                        Block @ (50,34)
+                                                            List
+                                                                Print @ (51,21)
+                                                                    List
+                                                                        IntLit @ (51,27)
+                                                                            1
+                                                        Block @ (52,24)
+                                                            List
+                                                                Print @ (53,21)
+                                                                    List
+                                                                        IntLit @ (53,27)
+                                                                            0
+                                        Print @ (56,13)
+                                            List
+                                                StringLit @ (56,19)
+                                                    "\n"
+                                        Assign @ (57,15)
+                                            VarSel @ (57,13)
+                                                <none>
+                                                i
+                                            Binary @ (57,19)
+                                                ADD
+                                                VarSel @ (57,17)
+                                                    <none>
+                                                    i
+                                                IntLit @ (57,21)
+                                                    1
+                MethodDef @ (62,10)
+                    try
+                    TVoid @ (62,5)
+                    List
+                        LocalVarDef @ (62,18)
+                            TInt @ (62,14)
+                            c
+                            <none>
+                        LocalVarDef @ (62,27)
+                            TArray @ (62,21)
+                                TInt @ (62,21)
+                            row
+                            <none>
+                        LocalVarDef @ (62,38)
+                            TArray @ (62,32)
+                                TInt @ (62,32)
+                            col
+                            <none>
+                        LocalVarDef @ (62,49)
+                            TArray @ (62,43)
+                                TInt @ (62,43)
+                            diag1
+                            <none>
+                        LocalVarDef @ (62,62)
+                            TArray @ (62,56)
+                                TInt @ (62,56)
+                            diag2
+                            <none>
+                    Block @ (62,69)
+                        List
+                            LocalVarDef @ (63,13)
+                                TInt @ (63,9)
+                                N
+                                Call @ (63,27)
+                                    VarSel @ (63,21)
+                                        VarSel @ (63,17)
+                                            <none>
+                                            col
+                                        length
+                                    List
+                                        <empty>
+                            LocalVarDef @ (64,13)
+                                TInt @ (64,9)
+                                r
+                                IntLit @ (64,17)
+                                    0
+                            If @ (66,9)
+                                Binary @ (66,15)
+                                    EQ
+                                    VarSel @ (66,13)
+                                        <none>
+                                        c
+                                    VarSel @ (66,18)
+                                        <none>
+                                        N
+                                Block @ (66,21)
+                                    List
+                                        ExprEval @ (67,23)
+                                            Call @ (67,23)
+                                                VarSel @ (67,13)
+                                                    <none>
+                                                    printBoard
+                                                List
+                                                    VarSel @ (67,24)
+                                                        <none>
+                                                        col
+                                                    VarSel @ (67,29)
+                                                        <none>
+                                                        N
+                                Block @ (68,16)
+                                    List
+                                        While @ (69,13)
+                                            Binary @ (69,22)
+                                                LT
+                                                VarSel @ (69,20)
+                                                    <none>
+                                                    r
+                                                VarSel @ (69,24)
+                                                    <none>
+                                                    N
+                                            Block @ (69,27)
+                                                List
+                                                    If @ (70,17)
+                                                        Binary @ (70,52)
+                                                            AND
+                                                            Binary @ (70,33)
+                                                                AND
+                                                                Binary @ (70,28)
+                                                                    EQ
+                                                                    IndexSel @ (70,24)
+                                                                        VarSel @ (70,21)
+                                                                            <none>
+                                                                            row
+                                                                        VarSel @ (70,25)
+                                                                            <none>
+                                                                            r
+                                                                    IntLit @ (70,31)
+                                                                        0
+                                                                Binary @ (70,47)
+                                                                    EQ
+                                                                    IndexSel @ (70,41)
+                                                                        VarSel @ (70,36)
+                                                                            <none>
+                                                                            diag1
+                                                                        Binary @ (70,43)
+                                                                            ADD
+                                                                            VarSel @ (70,42)
+                                                                                <none>
+                                                                                r
+                                                                            VarSel @ (70,44)
+                                                                                <none>
+                                                                                c
+                                                                    IntLit @ (70,50)
+                                                                        0
+                                                            Binary @ (70,72)
+                                                                EQ
+                                                                IndexSel @ (70,60)
+                                                                    VarSel @ (70,55)
+                                                                        <none>
+                                                                        diag2
+                                                                    Binary @ (70,68)
+                                                                        SUB
+                                                                        Binary @ (70,62)
+                                                                            ADD
+                                                                            VarSel @ (70,61)
+                                                                                <none>
+                                                                                r
+                                                                            Binary @ (70,65)
+                                                                                SUB
+                                                                                VarSel @ (70,64)
+                                                                                    <none>
+                                                                                    N
+                                                                                IntLit @ (70,66)
+                                                                                    1
+                                                                        VarSel @ (70,69)
+                                                                            <none>
+                                                                            c
+                                                                IntLit @ (70,75)
+                                                                    0
+                                                        Block @ (70,78)
+                                                            List
+                                                                Assign @ (71,28)
+                                                                    IndexSel @ (71,24)
+                                                                        VarSel @ (71,21)
+                                                                            <none>
+                                                                            row
+                                                                        VarSel @ (71,25)
+                                                                            <none>
+                                                                            r
+                                                                    IntLit @ (71,30)
+                                                                        1
+                                                                Assign @ (72,32)
+                                                                    IndexSel @ (72,26)
+                                                                        VarSel @ (72,21)
+                                                                            <none>
+                                                                            diag1
+                                                                        Binary @ (72,28)
+                                                                            ADD
+                                                                            VarSel @ (72,27)
+                                                                                <none>
+                                                                                r
+                                                                            VarSel @ (72,29)
+                                                                                <none>
+                                                                                c
+                                                                    IntLit @ (72,34)
+                                                                        1
+                                                                Assign @ (73,38)
+                                                                    IndexSel @ (73,26)
+                                                                        VarSel @ (73,21)
+                                                                            <none>
+                                                                            diag2
+                                                                        Binary @ (73,34)
+                                                                            SUB
+                                                                            Binary @ (73,28)
+                                                                                ADD
+                                                                                VarSel @ (73,27)
+                                                                                    <none>
+                                                                                    r
+                                                                                Binary @ (73,31)
+                                                                                    SUB
+                                                                                    VarSel @ (73,30)
+                                                                                        <none>
+                                                                                        N
+                                                                                    IntLit @ (73,32)
+                                                                                        1
+                                                                            VarSel @ (73,35)
+                                                                                <none>
+                                                                                c
+                                                                    IntLit @ (73,40)
+                                                                        1
+                                                                Assign @ (74,28)
+                                                                    IndexSel @ (74,24)
+                                                                        VarSel @ (74,21)
+                                                                            <none>
+                                                                            col
+                                                                        VarSel @ (74,25)
+                                                                            <none>
+                                                                            c
+                                                                    VarSel @ (74,30)
+                                                                        <none>
+                                                                        r
+                                                                ExprEval @ (75,24)
+                                                                    Call @ (75,24)
+                                                                        VarSel @ (75,21)
+                                                                            <none>
+                                                                            try
+                                                                        List
+                                                                            Binary @ (75,26)
+                                                                                ADD
+                                                                                VarSel @ (75,25)
+                                                                                    <none>
+                                                                                    c
+                                                                                IntLit @ (75,27)
+                                                                                    1
+                                                                            VarSel @ (75,30)
+                                                                                <none>
+                                                                                row
+                                                                            VarSel @ (75,35)
+                                                                                <none>
+                                                                                col
+                                                                            VarSel @ (75,40)
+                                                                                <none>
+                                                                                diag1
+                                                                            VarSel @ (75,47)
+                                                                                <none>
+                                                                                diag2
+                                                                Assign @ (76,28)
+                                                                    IndexSel @ (76,24)
+                                                                        VarSel @ (76,21)
+                                                                            <none>
+                                                                            row
+                                                                        VarSel @ (76,25)
+                                                                            <none>
+                                                                            r
+                                                                    IntLit @ (76,30)
+                                                                        0
+                                                                Assign @ (77,32)
+                                                                    IndexSel @ (77,26)
+                                                                        VarSel @ (77,21)
+                                                                            <none>
+                                                                            diag1
+                                                                        Binary @ (77,28)
+                                                                            ADD
+                                                                            VarSel @ (77,27)
+                                                                                <none>
+                                                                                r
+                                                                            VarSel @ (77,29)
+                                                                                <none>
+                                                                                c
+                                                                    IntLit @ (77,34)
+                                                                        0
+                                                                Assign @ (78,38)
+                                                                    IndexSel @ (78,26)
+                                                                        VarSel @ (78,21)
+                                                                            <none>
+                                                                            diag2
+                                                                        Binary @ (78,34)
+                                                                            SUB
+                                                                            Binary @ (78,28)
+                                                                                ADD
+                                                                                VarSel @ (78,27)
+                                                                                    <none>
+                                                                                    r
+                                                                                Binary @ (78,31)
+                                                                                    SUB
+                                                                                    VarSel @ (78,30)
+                                                                                        <none>
+                                                                                        N
+                                                                                    IntLit @ (78,32)
+                                                                                        1
+                                                                            VarSel @ (78,35)
+                                                                                <none>
+                                                                                c
+                                                                    IntLit @ (78,40)
+                                                                        0
+                                                        <none>
+                                                    Assign @ (80,19)
+                                                        VarSel @ (80,17)
+                                                            <none>
+                                                            r
+                                                        Binary @ (80,23)
+                                                            ADD
+                                                            VarSel @ (80,21)
+                                                                <none>
+                                                                r
+                                                            IntLit @ (80,25)
+                                                                1

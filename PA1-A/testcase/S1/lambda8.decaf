@@ -1,0 +1,55 @@
+// higher order
+
+class Main {
+    static void main() {
+        var intarr_map = fun (int(int) f) => fun (int[] arr) {
+            var l = arr.length();
+            var rv = new int[l];
+            for (var i = 0; i < l; i = i + 1) rv[i] = f(arr[i]);
+            return rv;
+        };
+
+        var print_filter = fun (bool(int) f) => fun (int[] arr) {
+            for (var i = 0; i < l; i = i + 1)
+                if (f(arr[i])) Print(arr[i]);
+            Print("\n");
+        };
+
+        var print_arr = fun (int[] arr) {
+            for (var i = 0; i < a.length(); i = i + 1)
+                Print(a[i]);
+            Print("\n");
+        };
+
+        var dotintint = fun (int(int) f) => fun (int(int) g) => fun (int x) => f(g(x));
+
+        var plus1 = fun (int x) => x+1;
+        var times3 = fun (int x) => x*3;
+
+        var arr = new int[3]; arr[0] = 10; arr[1] = 20; arr[2] = 30;
+        var arr2 = new int[3]; arr[0] = 100; arr[1] = 200; arr[2] = 300;
+
+        print_arr(arr);
+        var pred = fun (int x) => (x != 20) && (x != 200);
+        var pf = print_arr(pred);
+        pf(arr);
+        print_arr(map(fun (int x) => x+1)(arr));
+        print_arr(map(plus1)(arr));
+        print_arr(map(times3)(arr));
+        print_arr(map (dotintint(plus1)(times3))
+                      (arr));
+        print_arr(map (dotintint(times3)(plus1))
+                      (arr));
+
+        Print("================================\n");
+        print_arr(arr2);
+        pf(arr2);
+        print_arr(map(fun (int x) => x+1)(arr2));
+        print_arr(map(plus1)(arr2));
+        print_arr(map(times3)(arr2));
+        print_arr(map (dotintint(plus1)(times3))
+                      (arr2));
+        print_arr(map (dotintint(times3)(plus1))
+                      (arr2));
+    }
+}

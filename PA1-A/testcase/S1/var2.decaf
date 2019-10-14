@@ -1,0 +1,23 @@
+class Main {
+    bool e;
+
+    static void main() {
+        var a = 5;
+        var b = 7;
+        var c = a + b - 1;
+
+        var d = (new Main()).e;
+        
+        var e;  // syntax error
+
+        var f = new int[2];
+
+        var g = true;
+        var h = false;
+
+        var i = 56 > 123;
+
+        var j = f[0];
+        var k = ReadInteger();
+    }
+}

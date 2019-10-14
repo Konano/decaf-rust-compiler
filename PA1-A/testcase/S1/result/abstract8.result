@@ -1,0 +1,92 @@
+TopLevel @ (1,10)
+    List
+        ClassDef @ (1,10)
+            ABSTRACT
+            Abstract
+            <none>
+            List
+                VarDef @ (2,9)
+                    TInt @ (2,5)
+                    v
+                    <none>
+                MethodDef @ (3,17)
+                    STATIC
+                    s
+                    TVoid @ (3,12)
+                    List
+                        <empty>
+                    Block @ (3,21)
+                        List
+                            <empty>
+                MethodDef @ (4,18)
+                    ABSTRACT
+                    a
+                    TInt @ (4,14)
+                    List
+                        <empty>
+                    <none>
+                MethodDef @ (5,9)
+                    m
+                    TInt @ (5,5)
+                    List
+                        <empty>
+                    Block @ (5,13)
+                        List
+                            Return @ (5,15)
+                                IntLit @ (5,22)
+                                    0
+        ClassDef @ (8,1)
+            Concrete
+            Abstract
+            List
+                VarDef @ (9,9)
+                    TInt @ (9,5)
+                    v
+                    <none>
+                MethodDef @ (10,17)
+                    STATIC
+                    s
+                    TVoid @ (10,12)
+                    List
+                        <empty>
+                    Block @ (10,21)
+                        List
+                            <empty>
+                MethodDef @ (11,9)
+                    a
+                    TInt @ (11,5)
+                    List
+                        <empty>
+                    Block @ (11,13)
+                        List
+                            Return @ (11,15)
+                                IntLit @ (11,22)
+                                    1
+                MethodDef @ (12,9)
+                    m
+                    TInt @ (12,5)
+                    List
+                        <empty>
+                    Block @ (12,13)
+                        List
+                            Return @ (12,15)
+                                IntLit @ (12,22)
+                                    0
+        ClassDef @ (15,1)
+            Main
+            <none>
+            List
+                MethodDef @ (16,17)
+                    STATIC
+                    main
+                    TVoid @ (16,12)
+                    List
+                        <empty>
+                    Block @ (16,24)
+                        List
+                            LocalVarDef @ (17,24)
+                                TClass @ (17,9)
+                                    Abstract
+                                a
+                                NewClass @ (17,28)
+                                    Concrete

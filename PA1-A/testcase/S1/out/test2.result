@@ -1,0 +1,161 @@
+TopLevel @ (1,1)
+    List
+        ClassDef @ (1,1)
+            Main
+            <none>
+            List
+                VarDef @ (2,9)
+                    TInt @ (2,5)
+                    i
+                    <none>
+                MethodDef @ (4,17)
+                    STATIC
+                    main
+                    TVoid @ (4,12)
+                    List
+                        <empty>
+                    Block @ (4,24)
+                        List
+                            LocalVarDef @ (5,19)
+                                TClass @ (5,9)
+                                    Hoo
+                                h
+                                NewClass @ (5,23)
+                                    Goo
+                            Assign @ (7,11)
+                                VarSel @ (7,9)
+                                    <none>
+                                    i
+                                IntLit @ (7,13)
+                                    4
+                            ExprEval @ (8,23)
+                                Call @ (8,23)
+                                    VarSel @ (8,11)
+                                        VarSel @ (8,9)
+                                            <none>
+                                            h
+                                        printNumbers
+                                    List
+                                        VarSel @ (8,24)
+                                            <none>
+                                            i
+                            Print @ (9,9)
+                                List
+                                    ClassTest @ (9,15)
+                                        VarSel @ (9,26)
+                                            <none>
+                                            h
+                                        Goo
+                            LocalVarDef @ (10,19)
+                                TClass @ (10,9)
+                                    Goo
+                                g
+                                ClassCast @ (10,34)
+                                    VarSel @ (10,34)
+                                        <none>
+                                        h
+                                    Goo
+                            ExprEval @ (11,23)
+                                Call @ (11,23)
+                                    VarSel @ (11,11)
+                                        VarSel @ (11,9)
+                                            <none>
+                                            g
+                                        printNumbers
+                                    List
+                                        VarSel @ (11,24)
+                                            <none>
+                                            i
+        ClassDef @ (15,1)
+            Hoo
+            <none>
+            List
+                MethodDef @ (16,9)
+                    printNumbers
+                    TInt @ (16,5)
+                    List
+                        LocalVarDef @ (16,26)
+                            TInt @ (16,22)
+                            n
+                            <none>
+                    Block @ (16,29)
+                        List
+                            LocalVarDef @ (17,13)
+                                TInt @ (17,9)
+                                i
+                                IntLit @ (17,17)
+                                    0
+                            If @ (19,9)
+                                Binary @ (19,16)
+                                    LT
+                                    IntLit @ (19,13)
+                                        10
+                                    VarSel @ (19,18)
+                                        <none>
+                                        n
+                                Block @ (19,21)
+                                    List
+                                        Assign @ (20,15)
+                                            VarSel @ (20,13)
+                                                <none>
+                                                n
+                                            IntLit @ (20,17)
+                                                10
+                                <none>
+                            While @ (23,9)
+                                Binary @ (23,18)
+                                    LT
+                                    VarSel @ (23,16)
+                                        <none>
+                                        i
+                                    VarSel @ (23,20)
+                                        <none>
+                                        n
+                                Block @ (23,23)
+                                    List
+                                        Print @ (24,13)
+                                            List
+                                                VarSel @ (24,19)
+                                                    <none>
+                                                    i
+                                        Assign @ (25,15)
+                                            VarSel @ (25,13)
+                                                <none>
+                                                i
+                                            Binary @ (25,19)
+                                                MUL
+                                                VarSel @ (25,17)
+                                                    <none>
+                                                    i
+                                                IntLit @ (25,21)
+                                                    2
+                            Print @ (28,9)
+                                List
+                                    StringLit @ (28,15)
+                                        "\n"
+                            Return @ (30,9)
+                                VarSel @ (30,16)
+                                    <none>
+                                    i
+        ClassDef @ (34,1)
+            Goo
+            Hoo
+            List
+                MethodDef @ (35,9)
+                    printNumbers
+                    TInt @ (35,5)
+                    List
+                        LocalVarDef @ (35,26)
+                            TInt @ (35,22)
+                            n
+                            <none>
+                    Block @ (35,29)
+                        List
+                            Print @ (36,9)
+                                List
+                                    VarSel @ (36,15)
+                                        <none>
+                                        n
+                            Return @ (38,9)
+                                IntLit @ (38,16)
+                                    1

@@ -1,0 +1,17 @@
+// basic lambda
+
+class Main {
+    static void main() {
+        var y = 0;
+
+        var f = fun (int x) => x + 1;
+        var a = fun (int x) { Print(f(x + y)); };
+        a(f(120));
+        a(13);
+
+        int(int) f1 = fun (int x) => x + 1;
+        void(int, int) a1 = fun (int x, int y) { Print(f(x + y)); };
+        a1(f1(120));
+        a1(13);
+    }
+}

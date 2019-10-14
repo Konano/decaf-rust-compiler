@@ -1,0 +1,14 @@
+class MultipleFormals {
+
+    int foo(int x, int y, int z) {
+        return (x + y + z)/3;
+    }
+
+    int method() {
+        int x = 3;
+        int y = x + x * x;
+        int z = (x - y / x) % y;
+
+        return foo(x, y, z);
+    }
+}

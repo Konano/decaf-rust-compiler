@@ -1,0 +1,16 @@
+// currying
+
+class Main {
+    static void main() {
+        var addn = fun (int x, int y)=>x+y;
+        int(int)(int) addc = fun (int x) => fun (int y) => x+y;
+        var badadd2 = fun (int x) => fun (int y) => x+y (2);    // bad
+        var add2 = (fun (int x) => fun (int y) => x+y) (2);
+        var add2c = addc(2);
+        var badadd2c = addn(2);                         // bad
+        Print(addn(2, 3));
+        Print(addc(2)(3));
+        Print(add2(3));
+        Print(add2c(3));
+    }
+}

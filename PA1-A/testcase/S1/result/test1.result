@@ -1,0 +1,98 @@
+TopLevel @ (1,1)
+    List
+        ClassDef @ (1,1)
+            Main
+            <none>
+            List
+                VarDef @ (2,10)
+                    TBool @ (2,5)
+                    field
+                    <none>
+                VarDef @ (4,16)
+                    TClass @ (4,5)
+                        Main
+                    another
+                    <none>
+                MethodDef @ (6,11)
+                    foo
+                    TArray @ (6,5)
+                        TInt @ (6,5)
+                    List
+                        LocalVarDef @ (6,19)
+                            TInt @ (6,15)
+                            y
+                            <none>
+                    Block @ (6,22)
+                        List
+                            LocalVarDef @ (7,15)
+                                TArray @ (7,9)
+                                    TInt @ (7,9)
+                                q
+                                NewArray @ (7,19)
+                                    TInt @ (7,23)
+                                    VarSel @ (7,27)
+                                        <none>
+                                        y
+                            LocalVarDef @ (8,13)
+                                TInt @ (8,9)
+                                i
+                                IntLit @ (8,17)
+                                    0
+                            While @ (10,9)
+                                Binary @ (10,18)
+                                    LT
+                                    VarSel @ (10,16)
+                                        <none>
+                                        i
+                                    VarSel @ (10,20)
+                                        <none>
+                                        y
+                                Block @ (10,23)
+                                    List
+                                        Assign @ (11,18)
+                                            IndexSel @ (11,14)
+                                                VarSel @ (11,13)
+                                                    <none>
+                                                    q
+                                                VarSel @ (11,15)
+                                                    <none>
+                                                    i
+                                            VarSel @ (11,20)
+                                                <none>
+                                                i
+                                        Assign @ (12,15)
+                                            VarSel @ (12,13)
+                                                <none>
+                                                i
+                                            Binary @ (12,19)
+                                                ADD
+                                                VarSel @ (12,17)
+                                                    <none>
+                                                    i
+                                                IntLit @ (12,21)
+                                                    1
+                            Return @ (15,9)
+                                VarSel @ (15,16)
+                                    <none>
+                                    q
+                MethodDef @ (18,16)
+                    STATIC
+                    main
+                    TInt @ (18,12)
+                    List
+                        <empty>
+                    Block @ (18,23)
+                        List
+                            Return @ (19,9)
+                                Call @ (19,34)
+                                    VarSel @ (19,28)
+                                        Call @ (19,24)
+                                            VarSel @ (19,21)
+                                                This @ (19,16)
+                                                foo
+                                            List
+                                                IntLit @ (19,25)
+                                                    5
+                                        length
+                                    List
+                                        <empty>

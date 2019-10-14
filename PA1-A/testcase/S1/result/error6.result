@@ -1,0 +1,4 @@
+*** Error at (4,18): illegal escape character
+*** Error at (5,18): illegal newline in string constant "\n
+
+*** Error at (6,1): illegal escape character

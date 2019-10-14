@@ -1,0 +1,4 @@
+class Main {
+    abstract int v;
+    static void main() { }
+}

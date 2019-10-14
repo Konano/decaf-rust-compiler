@@ -1,0 +1,16 @@
+class Main {
+    static int f(int a, int b) {
+        var c = "zjm1926";
+        var d = "glgjssy qyhfbqz";
+        var e = "xgjz";
+        var s = 0;
+        for (var i = a; i < b; i = i + 1)
+            s = s + i;
+        return s;
+    }
+    static void main() {
+        var a = 1;
+        var b = 10;
+        Print(f(a, b));
+    }
+}

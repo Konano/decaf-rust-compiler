@@ -1,0 +1,540 @@
+TopLevel @ (13,1)
+    List
+        ClassDef @ (13,1)
+            A
+            <none>
+            List
+                <empty>
+        ClassDef @ (14,1)
+            B
+            A
+            List
+                <empty>
+        ClassDef @ (15,1)
+            C
+            A
+            List
+                <empty>
+        ClassDef @ (16,1)
+            D
+            C
+            List
+                <empty>
+        ClassDef @ (17,1)
+            E
+            D
+            List
+                <empty>
+        ClassDef @ (18,1)
+            F
+            D
+            List
+                <empty>
+        ClassDef @ (19,1)
+            G
+            C
+            List
+                <empty>
+        ClassDef @ (20,1)
+            H
+            G
+            List
+                <empty>
+        ClassDef @ (21,1)
+            I
+            G
+            List
+                <empty>
+        ClassDef @ (23,1)
+            Main
+            <none>
+            List
+                MethodDef @ (24,17)
+                    STATIC
+                    main
+                    TVoid @ (24,12)
+                    List
+                        <empty>
+                    Block @ (24,24)
+                        List
+                            LocalVarDef @ (25,13)
+                                <none>
+                                l__a
+                                NewClass @ (25,20)
+                                    A
+                            LocalVarDef @ (26,13)
+                                <none>
+                                l__b
+                                NewClass @ (26,20)
+                                    B
+                            LocalVarDef @ (27,13)
+                                <none>
+                                l__c
+                                NewClass @ (27,20)
+                                    C
+                            LocalVarDef @ (28,13)
+                                <none>
+                                l__d
+                                NewClass @ (28,20)
+                                    D
+                            LocalVarDef @ (29,13)
+                                <none>
+                                l__e
+                                NewClass @ (29,20)
+                                    E
+                            LocalVarDef @ (30,13)
+                                <none>
+                                l__f
+                                NewClass @ (30,20)
+                                    F
+                            LocalVarDef @ (31,13)
+                                <none>
+                                l__g
+                                NewClass @ (31,20)
+                                    G
+                            LocalVarDef @ (32,13)
+                                <none>
+                                l__h
+                                NewClass @ (32,20)
+                                    H
+                            LocalVarDef @ (33,13)
+                                <none>
+                                l__i
+                                NewClass @ (33,20)
+                                    I
+                            LocalVarDef @ (35,27)
+                                TLambda @ (35,9)
+                                    TClass @ (35,9)
+                                        C
+                                    List
+                                        TInt @ (35,17)
+                                        TInt @ (35,22)
+                                goodfactory
+                                Lambda @ (35,41)
+                                    List
+                                        LocalVarDef @ (35,50)
+                                            TInt @ (35,46)
+                                            x
+                                            <none>
+                                        LocalVarDef @ (35,57)
+                                            TInt @ (35,53)
+                                            y
+                                            <none>
+                                    Block @ (35,60)
+                                        List
+                                            LocalVarDef @ (36,17)
+                                                <none>
+                                                t
+                                                VarSel @ (36,21)
+                                                    <none>
+                                                    y
+                                            For @ (37,13)
+                                                LocalVarDef @ (37,22)
+                                                    <none>
+                                                    l_
+                                                    VarSel @ (37,27)
+                                                        <none>
+                                                        x
+                                                Binary @ (37,33)
+                                                    NE
+                                                    VarSel @ (37,30)
+                                                        <none>
+                                                        l_
+                                                    IntLit @ (37,36)
+                                                        0
+                                                Assign @ (37,42)
+                                                    VarSel @ (37,39)
+                                                        <none>
+                                                        l_
+                                                    Binary @ (37,47)
+                                                        SUB
+                                                        VarSel @ (37,44)
+                                                            <none>
+                                                            l_
+                                                        IntLit @ (37,49)
+                                                            1
+                                                Block @ (37,54)
+                                                    List
+                                                        Assign @ (37,54)
+                                                            VarSel @ (37,52)
+                                                                <none>
+                                                                t
+                                                            Binary @ (37,58)
+                                                                ADD
+                                                                VarSel @ (37,56)
+                                                                    <none>
+                                                                    t
+                                                                IntLit @ (37,60)
+                                                                    1
+                                            If @ (38,13)
+                                                Binary @ (38,19)
+                                                    EQ
+                                                    VarSel @ (38,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (38,22)
+                                                        4
+                                                Block @ (38,25)
+                                                    List
+                                                        Return @ (38,25)
+                                                            VarSel @ (38,32)
+                                                                <none>
+                                                                l__d
+                                                <none>
+                                            If @ (39,13)
+                                                Binary @ (39,19)
+                                                    EQ
+                                                    VarSel @ (39,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (39,22)
+                                                        8
+                                                Block @ (39,25)
+                                                    List
+                                                        Return @ (39,25)
+                                                            VarSel @ (39,32)
+                                                                <none>
+                                                                l__h
+                                                <none>
+                                            If @ (40,13)
+                                                Binary @ (40,19)
+                                                    EQ
+                                                    VarSel @ (40,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (40,22)
+                                                        9
+                                                Block @ (40,25)
+                                                    List
+                                                        Return @ (40,25)
+                                                            VarSel @ (40,32)
+                                                                <none>
+                                                                l__i
+                                                <none>
+                            LocalVarDef @ (43,27)
+                                TLambda @ (43,9)
+                                    TClass @ (43,9)
+                                        A
+                                    List
+                                        TInt @ (43,17)
+                                        TInt @ (43,22)
+                                okfactory
+                                Lambda @ (43,39)
+                                    List
+                                        LocalVarDef @ (43,48)
+                                            TInt @ (43,44)
+                                            x
+                                            <none>
+                                        LocalVarDef @ (43,55)
+                                            TInt @ (43,51)
+                                            y
+                                            <none>
+                                    Block @ (43,58)
+                                        List
+                                            LocalVarDef @ (44,17)
+                                                <none>
+                                                t
+                                                VarSel @ (44,21)
+                                                    <none>
+                                                    y
+                                            For @ (45,13)
+                                                LocalVarDef @ (45,22)
+                                                    <none>
+                                                    l_
+                                                    VarSel @ (45,27)
+                                                        <none>
+                                                        x
+                                                Binary @ (45,33)
+                                                    NE
+                                                    VarSel @ (45,30)
+                                                        <none>
+                                                        l_
+                                                    IntLit @ (45,36)
+                                                        0
+                                                Assign @ (45,42)
+                                                    VarSel @ (45,39)
+                                                        <none>
+                                                        l_
+                                                    Binary @ (45,47)
+                                                        SUB
+                                                        VarSel @ (45,44)
+                                                            <none>
+                                                            l_
+                                                        IntLit @ (45,49)
+                                                            1
+                                                Block @ (45,54)
+                                                    List
+                                                        Assign @ (45,54)
+                                                            VarSel @ (45,52)
+                                                                <none>
+                                                                t
+                                                            Binary @ (45,58)
+                                                                ADD
+                                                                VarSel @ (45,56)
+                                                                    <none>
+                                                                    t
+                                                                IntLit @ (45,60)
+                                                                    1
+                                            If @ (46,13)
+                                                Binary @ (46,19)
+                                                    EQ
+                                                    VarSel @ (46,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (46,22)
+                                                        4
+                                                Block @ (46,25)
+                                                    List
+                                                        Return @ (46,25)
+                                                            VarSel @ (46,32)
+                                                                <none>
+                                                                l__d
+                                                <none>
+                                            If @ (47,13)
+                                                Binary @ (47,19)
+                                                    EQ
+                                                    VarSel @ (47,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (47,22)
+                                                        8
+                                                Block @ (47,25)
+                                                    List
+                                                        Return @ (47,25)
+                                                            VarSel @ (47,32)
+                                                                <none>
+                                                                l__h
+                                                <none>
+                                            If @ (48,13)
+                                                Binary @ (48,19)
+                                                    EQ
+                                                    VarSel @ (48,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (48,22)
+                                                        9
+                                                Block @ (48,25)
+                                                    List
+                                                        Return @ (48,25)
+                                                            VarSel @ (48,32)
+                                                                <none>
+                                                                l__i
+                                                <none>
+                            LocalVarDef @ (51,27)
+                                TLambda @ (51,9)
+                                    TClass @ (51,9)
+                                        B
+                                    List
+                                        TInt @ (51,17)
+                                        TInt @ (51,22)
+                                badfactory
+                                Lambda @ (51,40)
+                                    List
+                                        LocalVarDef @ (51,49)
+                                            TInt @ (51,45)
+                                            x
+                                            <none>
+                                        LocalVarDef @ (51,56)
+                                            TInt @ (51,52)
+                                            y
+                                            <none>
+                                    Block @ (51,59)
+                                        List
+                                            LocalVarDef @ (52,17)
+                                                <none>
+                                                t
+                                                VarSel @ (52,21)
+                                                    <none>
+                                                    y
+                                            For @ (53,13)
+                                                LocalVarDef @ (53,22)
+                                                    <none>
+                                                    l_
+                                                    VarSel @ (53,27)
+                                                        <none>
+                                                        x
+                                                Binary @ (53,33)
+                                                    NE
+                                                    VarSel @ (53,30)
+                                                        <none>
+                                                        l_
+                                                    IntLit @ (53,36)
+                                                        0
+                                                Assign @ (53,42)
+                                                    VarSel @ (53,39)
+                                                        <none>
+                                                        l_
+                                                    Binary @ (53,47)
+                                                        SUB
+                                                        VarSel @ (53,44)
+                                                            <none>
+                                                            l_
+                                                        IntLit @ (53,49)
+                                                            1
+                                                Block @ (53,54)
+                                                    List
+                                                        Assign @ (53,54)
+                                                            VarSel @ (53,52)
+                                                                <none>
+                                                                t
+                                                            Binary @ (53,58)
+                                                                ADD
+                                                                VarSel @ (53,56)
+                                                                    <none>
+                                                                    t
+                                                                IntLit @ (53,60)
+                                                                    1
+                                            If @ (54,13)
+                                                Binary @ (54,19)
+                                                    EQ
+                                                    VarSel @ (54,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (54,22)
+                                                        4
+                                                Block @ (54,25)
+                                                    List
+                                                        Return @ (54,25)
+                                                            VarSel @ (54,32)
+                                                                <none>
+                                                                l__d
+                                                <none>
+                                            If @ (55,13)
+                                                Binary @ (55,19)
+                                                    EQ
+                                                    VarSel @ (55,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (55,22)
+                                                        8
+                                                Block @ (55,25)
+                                                    List
+                                                        Return @ (55,25)
+                                                            VarSel @ (55,32)
+                                                                <none>
+                                                                l__h
+                                                <none>
+                                            If @ (56,13)
+                                                Binary @ (56,19)
+                                                    EQ
+                                                    VarSel @ (56,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (56,22)
+                                                        9
+                                                Block @ (56,25)
+                                                    List
+                                                        Return @ (56,25)
+                                                            VarSel @ (56,32)
+                                                                <none>
+                                                                l__i
+                                                <none>
+                            LocalVarDef @ (59,27)
+                                TLambda @ (59,9)
+                                    TClass @ (59,9)
+                                        G
+                                    List
+                                        TInt @ (59,17)
+                                        TInt @ (59,22)
+                                badfactory2
+                                Lambda @ (59,41)
+                                    List
+                                        LocalVarDef @ (59,50)
+                                            TInt @ (59,46)
+                                            x
+                                            <none>
+                                        LocalVarDef @ (59,57)
+                                            TInt @ (59,53)
+                                            y
+                                            <none>
+                                    Block @ (59,60)
+                                        List
+                                            LocalVarDef @ (60,17)
+                                                <none>
+                                                t
+                                                VarSel @ (60,21)
+                                                    <none>
+                                                    y
+                                            For @ (61,13)
+                                                LocalVarDef @ (61,22)
+                                                    <none>
+                                                    l_
+                                                    VarSel @ (61,27)
+                                                        <none>
+                                                        x
+                                                Binary @ (61,33)
+                                                    NE
+                                                    VarSel @ (61,30)
+                                                        <none>
+                                                        l_
+                                                    IntLit @ (61,36)
+                                                        0
+                                                Assign @ (61,42)
+                                                    VarSel @ (61,39)
+                                                        <none>
+                                                        l_
+                                                    Binary @ (61,47)
+                                                        SUB
+                                                        VarSel @ (61,44)
+                                                            <none>
+                                                            l_
+                                                        IntLit @ (61,49)
+                                                            1
+                                                Block @ (61,54)
+                                                    List
+                                                        Assign @ (61,54)
+                                                            VarSel @ (61,52)
+                                                                <none>
+                                                                t
+                                                            Binary @ (61,58)
+                                                                ADD
+                                                                VarSel @ (61,56)
+                                                                    <none>
+                                                                    t
+                                                                IntLit @ (61,60)
+                                                                    1
+                                            If @ (62,13)
+                                                Binary @ (62,19)
+                                                    EQ
+                                                    VarSel @ (62,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (62,22)
+                                                        4
+                                                Block @ (62,25)
+                                                    List
+                                                        Return @ (62,25)
+                                                            VarSel @ (62,32)
+                                                                <none>
+                                                                l__d
+                                                <none>
+                                            If @ (63,13)
+                                                Binary @ (63,19)
+                                                    EQ
+                                                    VarSel @ (63,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (63,22)
+                                                        8
+                                                Block @ (63,25)
+                                                    List
+                                                        Return @ (63,25)
+                                                            VarSel @ (63,32)
+                                                                <none>
+                                                                l__h
+                                                <none>
+                                            If @ (64,13)
+                                                Binary @ (64,19)
+                                                    EQ
+                                                    VarSel @ (64,17)
+                                                        <none>
+                                                        t
+                                                    IntLit @ (64,22)
+                                                        9
+                                                Block @ (64,25)
+                                                    List
+                                                        Return @ (64,25)
+                                                            VarSel @ (64,32)
+                                                                <none>
+                                                                l__i
+                                                <none>

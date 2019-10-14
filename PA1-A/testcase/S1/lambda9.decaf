@@ -1,0 +1,67 @@
+// type merge among return path
+
+//A--+->B
+//   |
+//   +->C--+->D--+->E
+//         |     |
+//         |     +->F
+//         |
+//         +->G--+->H
+//               |
+//               +->I
+
+class A {}
+class B extends A {}
+class C extends A {}
+class D extends C {}
+class E extends D {}
+class F extends D {}
+class G extends C {}
+class H extends G {}
+class I extends G {}
+
+class Main {
+    static void main() {
+        var l__a = new A(); // 1
+        var l__b = new B(); // 2
+        var l__c = new C(); // 3
+        var l__d = new D(); // 4
+        var l__e = new E(); // 5
+        var l__f = new F(); // 6
+        var l__g = new G(); // 7
+        var l__h = new H(); // 8
+        var l__i = new I(); // 9
+
+        class C(int, int) goodfactory = fun (int x, int y) {
+            var t = y;
+            for (var l_ = x; l_ != 0; l_ = l_ - 1) t = t + 1;
+            if (t == 4) return l__d;
+            if (t == 8) return l__h;
+            if (t == 9) return l__i;
+        };
+
+        class A(int, int) okfactory = fun (int x, int y) {
+            var t = y;
+            for (var l_ = x; l_ != 0; l_ = l_ - 1) t = t + 1;
+            if (t == 4) return l__d;
+            if (t == 8) return l__h;
+            if (t == 9) return l__i;
+        };
+
+        class B(int, int) badfactory = fun (int x, int y) {
+            var t = y;
+            for (var l_ = x; l_ != 0; l_ = l_ - 1) t = t + 1;
+            if (t == 4) return l__d;
+            if (t == 8) return l__h;
+            if (t == 9) return l__i;
+        };
+
+        class G(int, int) badfactory2 = fun (int x, int y) {
+            var t = y;
+            for (var l_ = x; l_ != 0; l_ = l_ - 1) t = t + 1;
+            if (t == 4) return l__d;
+            if (t == 8) return l__h;
+            if (t == 9) return l__i;
+        };
+    }
+}

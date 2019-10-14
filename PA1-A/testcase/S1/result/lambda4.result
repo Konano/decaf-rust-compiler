@@ -1,0 +1,71 @@
+TopLevel @ (3,1)
+    List
+        ClassDef @ (3,1)
+            Main
+            <none>
+            List
+                MethodDef @ (4,21)
+                    STATIC
+                    genadd
+                    TLambda @ (4,12)
+                        TInt @ (4,12)
+                        List
+                            TInt @ (4,16)
+                    List
+                        LocalVarDef @ (4,32)
+                            TInt @ (4,28)
+                            v
+                            <none>
+                    Block @ (4,35)
+                        List
+                            Return @ (5,9)
+                                Lambda @ (5,16)
+                                    List
+                                        LocalVarDef @ (5,25)
+                                            TInt @ (5,21)
+                                            x
+                                            <none>
+                                    Binary @ (5,32)
+                                        ADD
+                                        VarSel @ (5,31)
+                                            <none>
+                                            x
+                                        VarSel @ (5,33)
+                                            <none>
+                                            v
+                MethodDef @ (8,17)
+                    STATIC
+                    main
+                    TVoid @ (8,12)
+                    List
+                        <empty>
+                    Block @ (8,24)
+                        List
+                            LocalVarDef @ (9,13)
+                                <none>
+                                f
+                                Call @ (9,23)
+                                    VarSel @ (9,17)
+                                        <none>
+                                        genadd
+                                    List
+                                        IntLit @ (9,24)
+                                            23
+                            Print @ (10,9)
+                                List
+                                    Call @ (10,16)
+                                        VarSel @ (10,15)
+                                            <none>
+                                            f
+                                        List
+                                            IntLit @ (10,17)
+                                                24
+                            Print @ (11,9)
+                                List
+                                    Call @ (11,16)
+                                        VarSel @ (11,15)
+                                            <none>
+                                            f
+                                        List
+                                            IntLit @ (11,17)
+                                                26

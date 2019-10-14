@@ -1,0 +1,22 @@
+TopLevel @ (1,1)
+    List
+        ClassDef @ (1,1)
+            Main
+            <none>
+            List
+                MethodDef @ (2,19)
+                    ABSTRACT
+                    foo
+                    TVoid @ (2,14)
+                    List
+                        <empty>
+                    <none>
+                MethodDef @ (3,17)
+                    STATIC
+                    main
+                    TVoid @ (3,12)
+                    List
+                        <empty>
+                    Block @ (3,24)
+                        List
+                            <empty>

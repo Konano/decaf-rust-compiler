@@ -1,0 +1,134 @@
+TopLevel @ (3,1)
+    List
+        ClassDef @ (3,1)
+            Main
+            <none>
+            List
+                MethodDef @ (6,17)
+                    STATIC
+                    main
+                    TVoid @ (6,12)
+                    List
+                        <empty>
+                    Block @ (6,24)
+                        List
+                            LocalVarDef @ (7,13)
+                                TInt @ (7,9)
+                                i
+                                IntLit @ (7,17)
+                                    0
+                            LocalVarDef @ (8,25)
+                                TClass @ (8,9)
+                                    Fibonacci
+                                F
+                                NewClass @ (8,29)
+                                    Fibonacci
+                            While @ (10,9)
+                                Binary @ (10,18)
+                                    LT
+                                    VarSel @ (10,16)
+                                        <none>
+                                        i
+                                    IntLit @ (10,20)
+                                        10
+                                Block @ (10,24)
+                                    List
+                                        Print @ (11,13)
+                                            List
+                                                Call @ (11,25)
+                                                    VarSel @ (11,22)
+                                                        VarSel @ (11,20)
+                                                            <none>
+                                                            F
+                                                        get
+                                                    List
+                                                        VarSel @ (11,26)
+                                                            <none>
+                                                            i
+                                                StringLit @ (11,30)
+                                                    "\n"
+                                        Assign @ (12,15)
+                                            VarSel @ (12,13)
+                                                <none>
+                                                i
+                                            Binary @ (12,19)
+                                                ADD
+                                                VarSel @ (12,17)
+                                                    <none>
+                                                    i
+                                                IntLit @ (12,21)
+                                                    1
+                            Assign @ (15,11)
+                                VarSel @ (15,9)
+                                    <none>
+                                    i
+                                ReadInt @ (15,13)
+                            Print @ (16,9)
+                                List
+                                    Call @ (16,21)
+                                        VarSel @ (16,18)
+                                            VarSel @ (16,16)
+                                                <none>
+                                                F
+                                            get
+                                        List
+                                            VarSel @ (16,22)
+                                                <none>
+                                                i
+                                    StringLit @ (16,26)
+                                        "\n"
+        ClassDef @ (20,1)
+            Fibonacci
+            <none>
+            List
+                MethodDef @ (23,9)
+                    get
+                    TInt @ (23,5)
+                    List
+                        LocalVarDef @ (23,17)
+                            TInt @ (23,13)
+                            index
+                            <none>
+                    Block @ (23,24)
+                        List
+                            If @ (24,9)
+                                Binary @ (24,19)
+                                    LT
+                                    VarSel @ (24,13)
+                                        <none>
+                                        index
+                                    IntLit @ (24,21)
+                                        2
+                                Block @ (24,24)
+                                    List
+                                        Return @ (25,13)
+                                            IntLit @ (25,20)
+                                                1
+                                <none>
+                            Return @ (27,9)
+                                Binary @ (27,31)
+                                    ADD
+                                    Call @ (27,19)
+                                        VarSel @ (27,16)
+                                            <none>
+                                            get
+                                        List
+                                            Binary @ (27,26)
+                                                SUB
+                                                VarSel @ (27,20)
+                                                    <none>
+                                                    index
+                                                IntLit @ (27,28)
+                                                    1
+                                    Call @ (27,36)
+                                        VarSel @ (27,33)
+                                            <none>
+                                            get
+                                        List
+                                            Binary @ (27,43)
+                                                SUB
+                                                VarSel @ (27,37)
+                                                    <none>
+                                                    index
+                                                IntLit @ (27,45)
+                                                    2

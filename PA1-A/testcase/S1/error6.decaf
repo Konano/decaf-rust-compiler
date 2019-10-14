@@ -1,0 +1,8 @@
+class Main {
+    static void main() {
+        string str;
+        str = "\n\a"; // illegal escape character
+        str = "\n
+\bcde";
+    }
+}

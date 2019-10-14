@@ -1,0 +1,94 @@
+TopLevel @ (1,1)
+    List
+        ClassDef @ (1,1)
+            Main
+            <none>
+            List
+                VarDef @ (2,10)
+                    TBool @ (2,5)
+                    e
+                    <none>
+                MethodDef @ (4,17)
+                    STATIC
+                    main
+                    TVoid @ (4,12)
+                    List
+                        <empty>
+                    Block @ (4,24)
+                        List
+                            LocalVarDef @ (5,13)
+                                <none>
+                                a
+                                IntLit @ (5,17)
+                                    5
+                            LocalVarDef @ (6,13)
+                                <none>
+                                b
+                                IntLit @ (6,17)
+                                    7
+                            LocalVarDef @ (7,13)
+                                <none>
+                                c
+                                Binary @ (7,23)
+                                    SUB
+                                    Binary @ (7,19)
+                                        ADD
+                                        VarSel @ (7,17)
+                                            <none>
+                                            a
+                                        VarSel @ (7,21)
+                                            <none>
+                                            b
+                                    IntLit @ (7,25)
+                                        1
+                            LocalVarDef @ (9,13)
+                                <none>
+                                d
+                                VarSel @ (9,30)
+                                    NewClass @ (9,18)
+                                        Main
+                                    e
+                            LocalVarDef @ (11,13)
+                                <none>
+                                e
+                                NewClass @ (11,17)
+                                    Main
+                            LocalVarDef @ (13,13)
+                                <none>
+                                f
+                                NewArray @ (13,17)
+                                    TInt @ (13,21)
+                                    IntLit @ (13,25)
+                                        2
+                            LocalVarDef @ (15,13)
+                                <none>
+                                g
+                                BoolLit @ (15,17)
+                                    true
+                            LocalVarDef @ (16,13)
+                                <none>
+                                h
+                                BoolLit @ (16,17)
+                                    false
+                            LocalVarDef @ (18,13)
+                                <none>
+                                i
+                                Binary @ (18,20)
+                                    GT
+                                    IntLit @ (18,17)
+                                        56
+                                    IntLit @ (18,22)
+                                        123
+                            LocalVarDef @ (20,13)
+                                <none>
+                                j
+                                IndexSel @ (20,18)
+                                    VarSel @ (20,17)
+                                        <none>
+                                        f
+                                    IntLit @ (20,19)
+                                        0
+                            LocalVarDef @ (21,13)
+                                <none>
+                                k
+                                ReadInt @ (21,17)

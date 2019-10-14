@@ -1,0 +1,12 @@
+cargo-features = ["profile-overrides"]
+
+[workspace]
+members = [
+  "common",
+  "print",
+  "syntax",
+  "driver",
+]
+
+[profile.dev.overrides."*"]
+opt-level = 3

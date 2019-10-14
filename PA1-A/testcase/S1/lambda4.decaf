@@ -1,0 +1,13 @@
+// lambda as return value passing
+
+class Main {
+    static int(int) genadd(int v) {
+        return fun (int x) => x+v;
+    }
+
+    static void main() {
+        var f = genadd(23);
+        Print(f(24));
+        Print(f(26));
+    }
+}

@@ -1,0 +1,12 @@
+abstract class Abstract {
+    int v;
+    static void s() { }
+    abstract int a();
+    int m(); // error
+}
+
+class Main {
+    static void main() {
+        class Abstract a = new Abstract(); // pass PA1
+    }
+}

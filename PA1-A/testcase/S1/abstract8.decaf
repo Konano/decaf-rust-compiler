@@ -1,0 +1,19 @@
+abstract class Abstract {
+    int v;
+    static void s() { }
+    abstract int a();
+    int m() { return 0; }
+}
+
+class Concrete extends Abstract {
+    int v;
+    static void s() { }
+    int a() { return 1; }
+    int m() { return 0; }
+}
+
+class Main {
+    static void main() {
+        class Abstract a = new Concrete(); // pass PA1
+    }
+}

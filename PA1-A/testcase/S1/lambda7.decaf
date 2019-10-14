@@ -1,0 +1,52 @@
+// method interop
+
+class A {
+    int f(int x) { return x - 1; }
+    static int g(int x) { return x + 1; }
+    int(int) m;
+}
+
+class Main {
+    int v;
+    int(int) mfunc;
+    static int ms(int x) { return x + 10; }
+    int mf(int x) { return x + v; }
+
+    static void main() {
+        new Main().trueMain();
+    }
+
+    void trueMain() {
+        var a = new A();
+        a.m = fun (int x) => x+2;
+
+        int(int) f;
+        f = ms;             // ok
+        f = Main.ms;        // ok
+        f = this.mf;        // ok
+        f = this.ms;        // bad
+        f = mf;             // error: unbound variable
+
+        f = a.f;            // ok
+        f = a.g;            // bad
+        f = a.m;            // ok
+        f = A.f;            // bad type: class A, int -> int
+        f = A.g;            // ok
+        f = A.m;            // bad
+
+        int(class Main, int) g;
+        g = ms;             // bad
+        g = Main.ms;        // bad
+        g = this.mf;        // bad  : this already bound TODO: more discussion
+        g = this.ms;        // bad
+        g = mf;             // ok   : don't bind this
+
+        int(class A, int) h;
+        h = a.f;            // bad: already bound
+        h = a.g;            // bad
+        h = a.m;            // bad
+        h = A.f;            // possibly ok, but more discussion
+        h = A.g;            // bad
+        h = A.m;            // bad
+    }
+}

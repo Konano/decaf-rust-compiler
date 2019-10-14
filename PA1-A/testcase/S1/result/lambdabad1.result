@@ -1,0 +1,48 @@
+TopLevel @ (3,1)
+    List
+        ClassDef @ (3,1)
+            Main
+            <none>
+            List
+                MethodDef @ (4,17)
+                    STATIC
+                    main
+                    TVoid @ (4,12)
+                    List
+                        <empty>
+                    Block @ (4,24)
+                        List
+                            LocalVarDef @ (5,13)
+                                <none>
+                                a
+                                Call @ (5,18)
+                                    IntLit @ (5,17)
+                                        4
+                                    List
+                                        IntLit @ (5,19)
+                                            3
+                            LocalVarDef @ (6,13)
+                                <none>
+                                b
+                                Binary @ (6,19)
+                                    ADD
+                                    IntLit @ (6,17)
+                                        2
+                                    Lambda @ (6,21)
+                                        List
+                                            <empty>
+                                        IntLit @ (6,29)
+                                            0
+                            LocalVarDef @ (7,13)
+                                <none>
+                                c
+                                Binary @ (7,19)
+                                    ADD
+                                    IntLit @ (7,17)
+                                        2
+                                    Call @ (7,22)
+                                        IntLit @ (7,21)
+                                            3
+                                        List
+                                            IntLit @ (7,23)
+                                                6

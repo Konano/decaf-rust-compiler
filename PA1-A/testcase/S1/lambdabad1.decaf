@@ -1,0 +1,9 @@
+// Call : Expr (Expr)
+
+class Main {
+    static void main() {
+        var a = 4(3);       // PA1 but not PA2
+        var b = 2 + fun ()=>0;  // .
+        var c = 2 + 3(6);   // .
+    }
+}
