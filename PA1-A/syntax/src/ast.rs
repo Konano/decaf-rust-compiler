@@ -23,6 +23,7 @@ pub struct Program<'a> {
 pub struct ClassDef<'a> {
   pub loc: Loc,
   pub name: &'a str,
+  pub abstract_: bool,
   pub parent: Option<&'a str>,
   pub field: Vec<FieldDef<'a>>,
   pub parent_ref: Cell<Option<&'a ClassDef<'a>>>,
@@ -71,7 +72,8 @@ pub struct FuncDef<'a> {
   pub ret: SynTy<'a>,
   pub param: Vec<&'a VarDef<'a>>,
   pub static_: bool,
-  pub body: Block<'a>,
+  pub abstract_: bool,
+  pub body: Option<Block<'a>>,
   // placing ret and param ty in one slice is mainly to some space, especially the size of struct Ty
   // [0] is ret_ty, [1..] is parm_ty
   pub ret_param_ty: Cell<Option<&'a [Ty<'a>]>>,
