@@ -56,7 +56,7 @@ priority = [
   { assoc = 'left', terms = ['Mul', 'Div', 'Mod'] },
   { assoc = 'no_assoc', terms = ['UMinus', 'Not'] },
   { assoc = 'no_assoc', terms = ['LBrk', 'Dot'] },
-  { assoc = 'no_assoc', terms = ['RPar', 'Empty'] },
+  { assoc = 'no_assoc', terms = ['LPar', 'RPar', 'Empty'] },
   { assoc = 'no_assoc', terms = ['Else'] },
 ]
 
