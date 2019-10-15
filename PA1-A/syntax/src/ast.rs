@@ -2,6 +2,7 @@ use crate::{ty::*, symbol::*};
 use common::{Loc, Ref, BinOp, UnOp};
 use typed_arena::Arena;
 use std::cell::{Cell, RefCell};
+use either::*;
 
 #[derive(Default)]
 pub struct ASTAlloc<'a> {
@@ -176,6 +177,7 @@ pub enum ExprKind<'a> {
   NewArray(NewArray<'a>),
   ClassTest(ClassTest<'a>),
   ClassCast(ClassCast<'a>),
+  Lambda(Lambda<'a>),
 }
 
 pub struct VarSel<'a> {
@@ -228,6 +230,21 @@ pub struct ClassCast<'a> {
   pub name: &'a str,
   pub expr: Box<Expr<'a>>,
   pub class: Cell<Option<&'a ClassDef<'a>>>,
+}
+
+// pub struct ExprLambda<'a> {
+//   pub param: Vec<&'a VarDef<'a>>,
+//   pub expr: Box<Expr<'a>>,
+// }
+
+// pub struct BlockLambda<'a> {
+//   pub param: Vec<&'a VarDef<'a>>,
+//   pub body: Block<'a>,
+// }
+
+pub struct Lambda<'a> {
+  pub param: Vec<&'a VarDef<'a>>,
+  pub body: Either<Box<Expr<'a>>, Block<'a>>, 
 }
 
 // some unit struct, they exist just to make match pattern consistent(all patterns are like Xxx(x))

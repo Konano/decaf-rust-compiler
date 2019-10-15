@@ -1,6 +1,7 @@
 use common::{IndentPrinter, IgnoreResult};
 use syntax::*;
 use std::fmt::Write;
+use either::*;
 
 pub fn program(pr: &Program, p: &mut IndentPrinter) { pr.print(p); }
 
@@ -54,6 +55,11 @@ impl Printable for SynTy<'_> {
       SynTyKind::Named(c) => {
         write!(p, "TClass @ {:?}", self.loc).ignore();
         p.indent(|p| c.print(p));
+      }
+      SynTyKind::TLambda(ret, param) => {
+        write!(p, "TLambda @ {:?}", self.loc).ignore();
+        p.indent(|p| ret.print(p));
+        p.indent(|p| param.print(p));
       }
     }
     for _ in 0..self.arr { p.dec(); }
@@ -148,7 +154,14 @@ impl Printable for Expr<'_> {
       VarSel => x.owner x.name, IndexSel => x.arr x.idx, IntLit => x, BoolLit => x, StringLit => "\"".to_owned() + x + "\"",
       NullLit => , Call => x.func x.arg, Unary => x.op.to_word_str() x.r, Binary => x.op.to_word_str() x.l x.r,
       This => , ReadInt => , ReadLine => , NewClass => x.name, NewArray => x.elem x.len, ClassTest => x.expr x.name,
-      ClassCast => x.expr x.name
+      ClassCast => x.expr x.name, Lambda => x.param x.body
     );
+  }
+}
+
+impl Printable for Either<std::boxed::Box<syntax::ast::Expr<'_>>, syntax::ast::Block<'_>> {
+  #[allow(unused_variables)]
+  fn print(&self, p: &mut IndentPrinter) {
+    if self.is_left() { self.as_ref().left().print(p); } else { self.as_ref().right().print(p); }
   }
 }

@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 syntax = { path = "../syntax" }
 common = { path = "../common" }
+either = "1.5.3"

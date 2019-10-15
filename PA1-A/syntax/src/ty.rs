@@ -9,6 +9,7 @@ pub enum SynTyKind<'a> {
   String,
   Void,
   Named(&'a str),
+  TLambda(Box<SynTy<'a>>, Vec<SynTy<'a>>),
 }
 
 #[derive(Eq, PartialEq)]

@@ -1,6 +1,7 @@
 use crate::{ast::*, ty::*, VecExt, dft, check_str, mk_stmt, mk_expr, mk_int_lit, mk_block};
 use parser_macros::lalr1;
 use common::{ErrorKind, Loc, BinOp, UnOp, Errors, NO_LOC};
+use either::*;
 
 pub fn work<'p>(code: &'p str, alloc: &'p ASTAlloc<'p>) -> Result<&'p Program<'p>, Errors<'p, Ty<'p>>> {
   let mut parser = Parser { alloc, error: Errors::default() };
@@ -46,6 +47,7 @@ fn mk_bin<'p>(l: Expr<'p>, r: Expr<'p>, loc: Loc, op: BinOp) -> Expr<'p> {
 #[lalr1(Program)]
 #[lex(r##"
 priority = [
+  { assoc = 'left', terms = ['RightArrow'] },
   { assoc = 'left', terms = ['Or'] },
   { assoc = 'left', terms = ['And'] },
   { assoc = 'no_assoc', terms = ['Eq', 'Ne'] },
@@ -83,6 +85,8 @@ priority = [
 'static' = 'Static'
 'abstract' = 'Abstract'
 'instanceof' = 'InstanceOf'
+'fun' = 'Fun'
+'=>' = 'RightArrow'
 '<=' = 'Le'
 '>=' = 'Ge'
 '==' = 'Eq'
@@ -238,9 +242,9 @@ impl<'p> Parser<'p> {
 
   #[rule(Expr -> LValue)]
   fn expr_lvalue(l: Expr<'p>) -> Expr<'p> { l }
-  #[rule(Expr -> VarSel LPar ExprListOrEmpty RPar)]
-  fn expr_call(func: Expr<'p>, l: Token, arg: Vec<Expr<'p>>, _r: Token) -> Expr<'p> {
-    mk_expr(l.loc(), Call { func: Box::new(func), arg, func_ref: dft() }.into())
+  #[rule(Expr -> Expr LPar ExprListOrEmpty RPar)]
+  fn expr_call(e: Expr<'p>, l: Token, arg: Vec<Expr<'p>>, _r: Token) -> Expr<'p> {
+    mk_expr(l.loc(), Call { func: Box::new(e), arg, func_ref: dft() }.into())
   }
   #[rule(Expr -> IntLit)]
   fn expr_int(&mut self, i: Token) -> Expr<'p> { mk_int_lit(i.loc(), i.str(), &mut self.error) }
@@ -315,6 +319,22 @@ impl<'p> Parser<'p> {
   fn expr_not(n: Token, r: Expr<'p>) -> Expr<'p> {
     mk_expr(n.loc(), Unary { op: UnOp::Not, r: Box::new(r) }.into())
   }
+  #[rule(Expr -> Fun LPar ParamListOrEmpty RPar RightArrow Expr)]
+  fn expr_lambda(_f: Token, _l: Token, l: Vec<&'p VarDef<'p>>, _r: Token, _ra: Token, e: Expr<'p>) -> Expr<'p> {
+    mk_expr(_f.loc(), Lambda { param: l, body: Left(Box::new(e)) }.into())  
+  }
+  #[rule(Expr -> Fun LPar ParamListOrEmpty RPar Block)]
+  fn block_lambda(_f: Token, _l: Token, l: Vec<&'p VarDef<'p>>, _r: Token, b: Block<'p>) -> Expr<'p> {
+    mk_expr(_f.loc(), Lambda { param: l, body: Right(b) }.into())  
+  }
+  #[rule(ParamListOrEmpty -> ParamList)]
+  fn param_list_empty1(l: Vec<&'p VarDef<'p>>) -> Vec<&'p VarDef<'p>> { l }
+  #[rule(ParamListOrEmpty ->)]
+  fn param_list_empty0() -> Vec<&'p VarDef<'p>> { vec![] }
+  #[rule(ParamList -> ParamList Comma VarDef)]
+  fn param_list_init1(l: Vec<&'p VarDef<'p>>, _c: Token, v:&'p VarDef<'p>) -> Vec<&'p VarDef<'p>> { l.pushed(v) }
+  #[rule(ParamList -> VarDef)]
+  fn param_list_init0(v: &'p VarDef<'p>) -> Vec<&'p VarDef<'p>> { vec![v] }
 
   #[rule(ExprList -> ExprList Comma Expr)]
   fn expr_list(l: Vec<Expr<'p>>, _c: Token, r: Expr<'p>) -> Vec<Expr<'p>> { l.pushed(r) }
@@ -355,4 +375,16 @@ impl<'p> Parser<'p> {
   fn type_class(c: Token, name: Token) -> SynTy<'p> { SynTy { loc: c.loc(), arr: 0, kind: SynTyKind::Named(name.str()) } }
   #[rule(Type -> Type LBrk RBrk)]
   fn type_array(mut ty: SynTy<'p>, _l: Token, _r: Token) -> SynTy<'p> { (ty.arr += 1, ty).1 }
+  #[rule(Type -> Type LPar TypeListOrEmpty RPar)]
+  fn type_func1(ty: SynTy<'p>, _l: Token, param: Vec<SynTy<'p>>, _r: Token) -> SynTy<'p> { SynTy { loc: ty.loc, arr: 0, kind: SynTyKind::TLambda(Box::new(ty), param) } }
+  
+  #[rule(TypeListOrEmpty -> TypeList)]
+  fn type_list_empty1(l: Vec<SynTy<'p>>) ->  Vec<SynTy<'p>> { l }
+  #[rule(TypeListOrEmpty ->)]
+  fn type_list_empty0() ->  Vec<SynTy<'p>> { vec![] }
+
+  #[rule(TypeList -> TypeList Comma Type)]
+  fn type_list_init1(l: Vec<SynTy<'p>>, _c: Token, ty: SynTy<'p>) -> Vec<SynTy<'p>> { l.pushed(ty) }
+  #[rule(TypeList -> Type)]
+  fn type_list_init0(ty: SynTy<'p>) -> Vec<SynTy<'p>> { vec![ty] }
 }
