@@ -42,7 +42,7 @@ AST 格式化输出需要新建一个 TLambda 并加到 SynTyKind，`=>` 的优�
 
 **Q1：有一部分 AST 结点是枚举类型。若结点 B 是枚举类型，结点 A 是它的一个 variant，那么语法上会不会 A 和 B 有什么关系？**
 
-没有。
+有关系。例如 `enum Expr { Binary(op, lhs, rhs) }`，这就说明 Binary operation 是一种 Expr。
 
 **Q2：原有框架是如何解决空悬 else (dangling-else) 问题的？**
 
