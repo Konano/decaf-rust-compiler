@@ -1,0 +1,7 @@
+class Main {
+    static void main() {
+        a + b(c)(d);
+        (fun (int[] x) => fun (int[] y) => x)(new int(int,int)[][](bool)()[10])(new int[](int)[][10])[2 * 3];
+        foo(x, y).z[a](b)[c].d();
+    }
+}
