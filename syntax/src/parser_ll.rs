@@ -25,7 +25,7 @@ impl<'p> Parser<'p> {
       TokenKind::_Err => if self.error.0.last().map(|x| x.0) != Some(loc) {
         self.error.issue(loc, ErrorKind::UnrecognizedChar(token.piece[0] as char))
       }
-      TokenKind::UntermString => if self.error.0.last().map(|x| x.0) != Some(lexer_loc) { // FIXME: 
+      TokenKind::UntermString => if self.error.0.last().map(|x| x.0) != Some(lexer_loc) {
         check_str(token.str(), &mut self.error, loc);
         self.error.issue(lexer_loc, ErrorKind::SyntaxError)
       }

@@ -1,0 +1,12 @@
+digraph finite_state_machine {
+	rankdir=LR;
+	size="10,8"
+	node [shape = doublecircle]; Finshed;
+	node [shape = circle];
+	NewClassOrArray -> NewArrayType [ label = "ε" ];
+	NewArrayType -> ParaOrDimHalf [ label = "SimpleType" ];
+	ParaOrDimHalf -> ParaOrDimHalf [ label = "LPar TypeListOrEmpty RPar" ];
+	ParaOrDimHalf -> ParaOrDimHalfLBrk [ label = "LBrk" ];
+	ParaOrDimHalfLBrk -> ParaOrDimHalf [ label = "RBrk" ];
+	ParaOrDimHalfLBrk -> Finshed [ label = "Expr RBrk" ]
+}

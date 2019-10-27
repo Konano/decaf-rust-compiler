@@ -1,0 +1,15 @@
+digraph finite_state_machine {
+	rankdir=LR;
+	size="8,8"
+	node [shape = doublecircle]; ParaOrDim;
+	node [shape = circle];
+	Type -> ParaOrDim [ label = "SimpleType" ];
+	ParaOrDim -> TypeListOrEmpty [ label = "LPar" ];
+	ParaOrDim -> ParaOrDim [ label = "LBrk RBrk" ];
+	TypeListOrEmpty -> TypeList [ label = "ε" ];
+    TypeListOrEmpty -> ParaOrDim  [ label = "RPar" ];
+    TypeListMore -> ParaOrDim  [ label = "RPar" ];
+	TypeList -> TypeListMore [ label = "Type" ];
+	TypeListMore -> TypeListMore [ label = "Comma Type" ];
+}
+

@@ -1,0 +1,14 @@
+digraph finite_state_machine {
+	rankdir=LR;
+	size="10,8"
+	node [shape = doublecircle]; Block Expr;
+	node [shape = circle];
+	Lambda -> ParamListOrEmpty [ label = "Fun LPar" ];
+	ParamListOrEmpty -> LambdaFunc [ label = "RPar" ];
+	LambdaFunc -> Block [ label = "ε" ];
+	LambdaFunc -> Expr [ label = "RightArrow" ];
+    ParamListOrEmpty -> ParamList [ label = "ε" ];
+    ParamList -> ParamListMore [ label = "VarDef" ];
+    ParamListMore -> ParamListMore [ label = "Comma VarDef" ];
+    ParamListMore -> LambdaFunc [ label = "RPar" ];
+}
