@@ -540,16 +540,10 @@ impl<'p> Parser<'p> {
   fn new_class_or_array_c(name: Token, _l: Token, _r: Token) -> NewClassOrArray<'p> {
     NewClassOrArray::NewClass(name.str())
   }
-  #[rule(NewClassOrArray -> SimpleType LBrk NewArrayRem)]
-  fn new_class_or_array_a(mut ty: SynTy<'p>, _l: Token, dim_len: (u32, Expr<'p>)) -> NewClassOrArray<'p> {
-    ty.arr = dim_len.0;
-    NewClassOrArray::NewArray(ty, dim_len.1)
+  #[rule(NewClassOrArray -> NewArrayType Expr RBrk)]
+  fn new_class_or_array_a(mut ty: SynTy<'p>, len: Expr<'p>, _r: Token) -> NewClassOrArray<'p> {
+    NewClassOrArray::NewArray(ty, len)
   }
-
-  #[rule(NewArrayRem -> RBrk LBrk NewArrayRem)]
-  fn new_array_rem(_r: Token, l: Token, mut dim_len: (u32, Expr<'p>)) -> (u32, Expr<'p>) { (dim_len.0 += 1, dim_len).1 }
-  #[rule(NewArrayRem -> Expr RBrk)]
-  fn new_array_rem0(len: Expr<'p>, _r: Token) -> (u32, Expr<'p>) { (0, len) }
 
   #[rule(SimpleType -> Int)]
   fn type_int(i: Token) -> SynTy<'p> { SynTy { loc: i.loc(), arr: 0, kind: SynTyKind::Int } }
@@ -563,13 +557,24 @@ impl<'p> Parser<'p> {
   fn type_class(c: Token, name: Token) -> SynTy<'p> { SynTy { loc: c.loc(), arr: 0, kind: SynTyKind::Named(name.str()) } }
   #[rule(Type -> SimpleType ParaOrDim)]
   fn type_para_dim(ty: SynTy<'p>, l: Vec<ParaOrArray<'p>>) -> SynTy<'p> { merge_para_array(ty, l) }
+  #[rule(NewArrayType -> SimpleType ParaOrDimHalf)]
+  fn type_para_dim(ty: SynTy<'p>, l: Vec<ParaOrArray<'p>>) -> SynTy<'p> { merge_para_array(ty, l) }
 
   #[rule(ParaOrDim -> LPar TypeListOrEmpty RPar ParaOrDim)]
-  fn para_dim_2(_l: Token, para: Vec<SynTy<'p>>, _r: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l.pushed(ParaOrArray::Para(para)) }
+  fn para_dim_p(_l: Token, para: Vec<SynTy<'p>>, _r: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l.pushed(ParaOrArray::Para(para)) }
   #[rule(ParaOrDim -> LBrk RBrk ParaOrDim)]
-  fn para_dim_1(_l: Token, _r: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l.pushed(ParaOrArray::Array()) }
+  fn para_dim_d(_l: Token, _r: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l.pushed(ParaOrArray::Array()) }
   #[rule(ParaOrDim ->)]
-  fn para_dim_0() -> Vec<ParaOrArray<'p>> { vec![] }
+  fn para_dim_e() -> Vec<ParaOrArray<'p>> { vec![] }
+
+  #[rule(ParaOrDimHalf -> LPar TypeListOrEmpty RPar ParaOrDimHalf)]
+  fn para_dim_half_p(_l: Token, para: Vec<SynTy<'p>>, _r: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l.pushed(ParaOrArray::Para(para)) }
+  #[rule(ParaOrDimHalf -> LBrk ParaOrDimHalfLBrk)]
+  fn para_dim_half_l(_l: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l }
+  #[rule(ParaOrDimHalfLBrk -> RBrk ParaOrDimHalf)]
+  fn para_dim_half_r(_l: Token, l: Vec<ParaOrArray<'p>>) -> Vec<ParaOrArray<'p>> { l.pushed(ParaOrArray::Array()) }
+  #[rule(ParaOrDimHalfLBrk ->)]
+  fn para_dim_half_e() -> Vec<ParaOrArray<'p>> { vec![] }
 
   #[rule(TypeListOrEmpty -> TypeList)]
   fn type_list_empty1(l: Vec<SynTy<'p>>) ->  Vec<SynTy<'p>> { l.reversed() }

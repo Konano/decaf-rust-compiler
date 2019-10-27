@@ -111,24 +111,27 @@ Productions:
   109: Expr9 -> Id
   110: Expr9 -> New NewClassOrArray
   111: NewClassOrArray -> Id LPar RPar
-  112: NewClassOrArray -> SimpleType LBrk NewArrayRem
-  113: NewArrayRem -> RBrk LBrk NewArrayRem
-  114: NewArrayRem -> Expr RBrk
-  115: SimpleType -> Int
-  116: SimpleType -> Bool
-  117: SimpleType -> Void
-  118: SimpleType -> String
-  119: SimpleType -> Class Id
-  120: Type -> SimpleType ParaOrDim
-  121: ParaOrDim -> LPar TypeListOrEmpty RPar ParaOrDim
-  122: ParaOrDim -> LBrk RBrk ParaOrDim
-  123: ParaOrDim ->
-  124: TypeListOrEmpty -> TypeList
-  125: TypeListOrEmpty ->
-  126: TypeList -> Type TypeListMore
-  127: TypeListMore -> Comma Type TypeListMore
-  128: TypeListMore ->
-  129: _Program -> Program
+  112: NewClassOrArray -> NewArrayType Expr RBrk
+  113: SimpleType -> Int
+  114: SimpleType -> Bool
+  115: SimpleType -> Void
+  116: SimpleType -> String
+  117: SimpleType -> Class Id
+  118: Type -> SimpleType ParaOrDim
+  119: NewArrayType -> SimpleType ParaOrDimHalf
+  120: ParaOrDim -> LPar TypeListOrEmpty RPar ParaOrDim
+  121: ParaOrDim -> LBrk RBrk ParaOrDim
+  122: ParaOrDim ->
+  123: ParaOrDimHalf -> LPar TypeListOrEmpty RPar ParaOrDimHalf
+  124: ParaOrDimHalf -> LBrk ParaOrDimHalfLBrk
+  125: ParaOrDimHalfLBrk -> RBrk ParaOrDimHalf
+  126: ParaOrDimHalfLBrk ->
+  127: TypeListOrEmpty -> TypeList
+  128: TypeListOrEmpty ->
+  129: TypeList -> Type TypeListMore
+  130: TypeListMore -> Comma Type TypeListMore
+  131: TypeListMore ->
+  132: _Program -> Program
 
 Tokens:
   0: Program
@@ -184,72 +187,74 @@ Tokens:
   50: Term8
   51: Expr9
   52: NewClassOrArray
-  53: NewArrayRem
-  54: SimpleType
-  55: Type
+  53: SimpleType
+  54: Type
+  55: NewArrayType
   56: ParaOrDim
-  57: TypeListOrEmpty
-  58: TypeList
-  59: TypeListMore
-  60: _Program
-  61: _Eps
-  62: _Eof
-  63: _Err
-  64: Void
-  65: Var
-  66: Int
-  67: Bool
-  68: String
-  69: New
-  70: Null
-  71: True
-  72: False
-  73: Class
-  74: Extends
-  75: This
-  76: While
-  77: For
-  78: If
-  79: Else
-  80: Return
-  81: Break
-  82: Print
-  83: ReadInteger
-  84: ReadLine
-  85: Static
-  86: Abstract
-  87: InstanceOf
-  88: Fun
-  89: RightArrow
-  90: Le
-  91: Ge
-  92: Eq
-  93: Ne
-  94: And
-  95: Or
-  96: Add
-  97: Sub
-  98: Mul
-  99: Div
-  100: Mod
-  101: Assign
-  102: Lt
-  103: Gt
-  104: Dot
-  105: Comma
-  106: Semi
-  107: Not
-  108: LPar
-  109: RPar
-  110: LBrk
-  111: RBrk
-  112: LBrc
-  113: RBrc
-  114: Colon
-  115: StringLit
-  116: UntermString
-  117: IntLit
-  118: Id
+  57: ParaOrDimHalf
+  58: ParaOrDimHalfLBrk
+  59: TypeListOrEmpty
+  60: TypeList
+  61: TypeListMore
+  62: _Program
+  63: _Eps
+  64: _Eof
+  65: _Err
+  66: Void
+  67: Var
+  68: Int
+  69: Bool
+  70: String
+  71: New
+  72: Null
+  73: True
+  74: False
+  75: Class
+  76: Extends
+  77: This
+  78: While
+  79: For
+  80: If
+  81: Else
+  82: Return
+  83: Break
+  84: Print
+  85: ReadInteger
+  86: ReadLine
+  87: Static
+  88: Abstract
+  89: InstanceOf
+  90: Fun
+  91: RightArrow
+  92: Le
+  93: Ge
+  94: Eq
+  95: Ne
+  96: And
+  97: Or
+  98: Add
+  99: Sub
+  100: Mul
+  101: Div
+  102: Mod
+  103: Assign
+  104: Lt
+  105: Gt
+  106: Dot
+  107: Comma
+  108: Semi
+  109: Not
+  110: LPar
+  111: RPar
+  112: LBrk
+  113: RBrk
+  114: LBrc
+  115: RBrc
+  116: Colon
+  117: StringLit
+  118: UntermString
+  119: IntLit
+  120: Id
 
 Program:
 first: _Eps Class Abstract
@@ -973,32 +978,12 @@ follow: Le Ge Eq Ne And Or Add Sub Mul Div Mod Assign Lt Gt Dot Comma Semi LPar 
 NewClassOrArray:
 first: Void Int Bool String Class Id
 follow: Le Ge Eq Ne And Or Add Sub Mul Div Mod Assign Lt Gt Dot Comma Semi LPar RPar LBrk RBrk
-  Void => NewClassOrArray -> SimpleType LBrk NewArrayRem
-  Int => NewClassOrArray -> SimpleType LBrk NewArrayRem
-  Bool => NewClassOrArray -> SimpleType LBrk NewArrayRem
-  String => NewClassOrArray -> SimpleType LBrk NewArrayRem
-  Class => NewClassOrArray -> SimpleType LBrk NewArrayRem
+  Void => NewClassOrArray -> NewArrayType Expr RBrk
+  Int => NewClassOrArray -> NewArrayType Expr RBrk
+  Bool => NewClassOrArray -> NewArrayType Expr RBrk
+  String => NewClassOrArray -> NewArrayType Expr RBrk
+  Class => NewClassOrArray -> NewArrayType Expr RBrk
   Id => NewClassOrArray -> Id LPar RPar
-
-NewArrayRem:
-first: New Null True False This ReadInteger ReadLine InstanceOf Fun Sub Not LPar RBrk StringLit IntLit Id
-follow: Le Ge Eq Ne And Or Add Sub Mul Div Mod Assign Lt Gt Dot Comma Semi LPar RPar LBrk RBrk
-  New => NewArrayRem -> Expr RBrk
-  Null => NewArrayRem -> Expr RBrk
-  True => NewArrayRem -> Expr RBrk
-  False => NewArrayRem -> Expr RBrk
-  This => NewArrayRem -> Expr RBrk
-  ReadInteger => NewArrayRem -> Expr RBrk
-  ReadLine => NewArrayRem -> Expr RBrk
-  InstanceOf => NewArrayRem -> Expr RBrk
-  Fun => NewArrayRem -> Expr RBrk
-  Sub => NewArrayRem -> Expr RBrk
-  Not => NewArrayRem -> Expr RBrk
-  LPar => NewArrayRem -> Expr RBrk
-  RBrk => NewArrayRem -> RBrk LBrk NewArrayRem
-  StringLit => NewArrayRem -> Expr RBrk
-  IntLit => NewArrayRem -> Expr RBrk
-  Id => NewArrayRem -> Expr RBrk
 
 SimpleType:
 first: Void Int Bool String Class
@@ -1018,6 +1003,15 @@ follow: Comma RPar Id
   String => Type -> SimpleType ParaOrDim
   Class => Type -> SimpleType ParaOrDim
 
+NewArrayType:
+first: Void Int Bool String Class
+follow: New Null True False This ReadInteger ReadLine InstanceOf Fun Sub Not LPar StringLit IntLit Id
+  Void => NewArrayType -> SimpleType ParaOrDimHalf
+  Int => NewArrayType -> SimpleType ParaOrDimHalf
+  Bool => NewArrayType -> SimpleType ParaOrDimHalf
+  String => NewArrayType -> SimpleType ParaOrDimHalf
+  Class => NewArrayType -> SimpleType ParaOrDimHalf
+
 ParaOrDim:
 first: _Eps LPar LBrk
 follow: Comma RPar Id
@@ -1026,6 +1020,32 @@ follow: Comma RPar Id
   RPar => ParaOrDim ->
   LBrk => ParaOrDim -> LBrk RBrk ParaOrDim
   Id => ParaOrDim ->
+
+ParaOrDimHalf:
+first: LPar LBrk
+follow: New Null True False This ReadInteger ReadLine InstanceOf Fun Sub Not LPar StringLit IntLit Id
+  LPar => ParaOrDimHalf -> LPar TypeListOrEmpty RPar ParaOrDimHalf
+  LBrk => ParaOrDimHalf -> LBrk ParaOrDimHalfLBrk
+
+ParaOrDimHalfLBrk:
+first: _Eps RBrk
+follow: New Null True False This ReadInteger ReadLine InstanceOf Fun Sub Not LPar StringLit IntLit Id
+  New => ParaOrDimHalfLBrk ->
+  Null => ParaOrDimHalfLBrk ->
+  True => ParaOrDimHalfLBrk ->
+  False => ParaOrDimHalfLBrk ->
+  This => ParaOrDimHalfLBrk ->
+  ReadInteger => ParaOrDimHalfLBrk ->
+  ReadLine => ParaOrDimHalfLBrk ->
+  InstanceOf => ParaOrDimHalfLBrk ->
+  Fun => ParaOrDimHalfLBrk ->
+  Sub => ParaOrDimHalfLBrk ->
+  Not => ParaOrDimHalfLBrk ->
+  LPar => ParaOrDimHalfLBrk ->
+  RBrk => ParaOrDimHalfLBrk -> RBrk ParaOrDimHalf
+  StringLit => ParaOrDimHalfLBrk ->
+  IntLit => ParaOrDimHalfLBrk ->
+  Id => ParaOrDimHalfLBrk ->
 
 TypeListOrEmpty:
 first: _Eps Void Int Bool String Class
