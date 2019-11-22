@@ -19,7 +19,7 @@ pub(crate) fn dft<T: Default>() -> T { T::default() }
 
 pub(crate) fn mk_stmt(loc: Loc, kind: StmtKind) -> Stmt { Stmt { loc, kind } }
 
-pub(crate) fn mk_expr(loc: Loc, kind: ExprKind) -> Expr { Expr { loc, ty: dft(), kind } }
+pub(crate) fn mk_expr(loc: Loc, kind: ExprKind) -> Expr { Expr { loc, ty: dft(), kind, scope: dft() } }
 
 pub(crate) fn mk_int_lit<'a, T>(loc: Loc, s: &'a str, error: &mut Errors<'a, T>) -> Expr<'a> {
   let val = if s.starts_with("0x") { i32::from_str_radix(&s[2..], 16) } else { s.parse() }

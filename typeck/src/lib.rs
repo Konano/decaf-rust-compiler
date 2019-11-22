@@ -2,8 +2,8 @@ mod scope_stack;
 mod symbol_pass;
 mod type_pass;
 
-use common::{Errors, ErrorKind::*, Ref};
-use syntax::{FuncDef, ClassDef, SynTy, SynTyKind, ScopeOwner, Ty, TyKind, Program, VarDef};
+use common::{Errors, ErrorKind::*, Ref, Loc};
+use syntax::{FuncDef, ClassDef, SynTy, SynTyKind, ScopeOwner, Ty, TyKind, Program, VarDef, Lambda};
 use typed_arena::Arena;
 use std::ops::{Deref, DerefMut};
 use crate::{symbol_pass::SymbolPass, type_pass::TypePass, scope_stack::ScopeStack};
@@ -15,7 +15,7 @@ pub struct TypeCkAlloc<'a> {
 }
 
 pub fn work<'a>(p: &'a Program<'a>, alloc: &'a TypeCkAlloc<'a>) -> Result<(), Errors<'a, Ty<'a>>> {
-  let mut s = SymbolPass(TypeCk { errors: Errors(vec![]), scopes: ScopeStack::new(p), loop_cnt: 0, cur_used: false, cur_func: None, cur_class: None, cur_var_def: None, alloc });
+  let mut s = SymbolPass(TypeCk { errors: Errors(vec![]), scopes: ScopeStack::new(p), loop_cnt: 0, cur_used: false, cur_idx: false, cur_func: None, cur_lambda: None, cur_class: None, cur_var_def: None, cur_assign: None, cur_def: vec![], alloc });
   s.program(p);
   if !s.errors.0.is_empty() { return Err(s.0.errors.sorted()); }
   let mut t = TypePass(s.0);
@@ -31,8 +31,12 @@ struct TypeCk<'a> {
   // `cur_used` is only used to determine 2 kinds of errors:
   // Class.var (cur_used == true) => BadFieldAssess; Class (cur_used == false) => UndeclaredVar
   cur_used: bool,
+  cur_idx: bool,
   cur_func: Option<&'a FuncDef<'a>>,
+  cur_lambda: Option<&'a Lambda<'a>>,
   cur_class: Option<&'a ClassDef<'a>>,
+  cur_assign: Option<Loc>,
+  cur_def: Vec<Loc>,
   // actually only use cur_var_def's loc
   // if cur_var_def is Some, will use it's loc to search for symbol in TypePass::var_sel
   // this can reject code like `int a = a;`
@@ -51,7 +55,17 @@ impl<'a> TypeCk<'a> {
       SynTyKind::Named(name) => if let Some(c) = self.scopes.lookup_class(name) {
         TyKind::Object(Ref(c))
       } else { self.issue(s.loc, NoSuchClass(name)) },
-      SynTyKind::TLambda(_, _) => TyKind::Void, // TODO: TLambda
+      SynTyKind::TLambda(ret, param) => {
+        let mut a = vec![];
+        a.push(self.ty(ret, false));
+        for i in param.iter() {
+          a.push(self.ty(i, false));
+          if i.kind == SynTyKind::Void {
+            self.issue(i.loc, VoidParam)
+          }
+        }
+        TyKind::Lambda(self.alloc.ty.alloc_extend(a))
+      },
     };
     match kind {
       TyKind::Error => Ty::error(),

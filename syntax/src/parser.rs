@@ -321,11 +321,11 @@ impl<'p> Parser<'p> {
   }
   #[rule(Expr -> Fun LPar ParamListOrEmpty RPar RightArrow Expr)]
   fn expr_lambda(_f: Token, _l: Token, l: Vec<&'p VarDef<'p>>, _r: Token, _ra: Token, e: Expr<'p>) -> Expr<'p> {
-    mk_expr(_f.loc(), Lambda { param: l, body: Left(Box::new(e)) }.into())  
+    mk_expr(_f.loc(), Lambda { name: format!("lambda@{:?}", _f.loc()), loc: _f.loc(), param: l, body: Left(Box::new(e)), ret_param_ty: dft(), scope: dft() }.into())  
   }
   #[rule(Expr -> Fun LPar ParamListOrEmpty RPar Block)]
   fn block_lambda(_f: Token, _l: Token, l: Vec<&'p VarDef<'p>>, _r: Token, b: Block<'p>) -> Expr<'p> {
-    mk_expr(_f.loc(), Lambda { param: l, body: Right(b) }.into())  
+    mk_expr(_f.loc(), Lambda { name: format!("lambda@{:?}", _f.loc()), loc: _f.loc(), param: l, body: Right(b), ret_param_ty: dft(), scope: dft() }.into())  
   }
   #[rule(ParamListOrEmpty -> ParamList)]
   fn param_list_empty1(l: Vec<&'p VarDef<'p>>) -> Vec<&'p VarDef<'p>> { l }

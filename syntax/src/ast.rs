@@ -40,6 +40,43 @@ impl<'a> ClassDef<'a> {
     }
   }
 
+  // pub fn clone(&self) -> ClassDef<'a> {
+  //   ClassDef { 
+  //     loc: self.loc,
+  //     name: self.name,
+  //     abstract_: self.abstract_,
+  //     parent: self.parent,
+  //     field: self.field,
+  //     parent_ref: self.parent_ref,
+  //     scope: self.scope,
+  //   }
+  // }
+
+  // pub fn combine(&self, rhs: &ClassDef<'a>) -> Option<&ClassDef<'a>> {
+  //   let mut c = self;
+  //   loop {
+  //     if rhs.extends(c) { break Some(c); }
+  //     if let Some(p) = c.parent_ref.get() { c = p; } else { break None; }
+  //   }
+  // }
+
+  pub fn ab_unoverload(&self) -> Vec<(&'a str, Ty<'a>)> {
+    let mut ab = if let Some(p) = self.parent_ref.get() { p.ab_unoverload() } else { vec![] };
+    for f in self.field.iter() { 
+      if let FieldDef::FuncDef(f) = f {
+        if f.abstract_ { 
+          let index = ab.iter().position(|x| x.0 == f.name && f.ret_ty().assignable_to(x.1));
+          if !index.is_none() { ab.remove(index.unwrap()); }
+          ab.push((f.name, f.ret_ty()));
+        } else if !f.static_ {
+          let index = ab.iter().position(|x| x.0 == f.name && f.ret_ty().assignable_to(x.1));
+          if !index.is_none() { ab.remove(index.unwrap()); }
+        }
+      }
+    };
+    ab
+  }
+
   // will recursively lookup in all its parent
   pub fn lookup(&self, name: &str) -> Option<Symbol<'a>> {
     let mut c = self;
@@ -157,6 +194,7 @@ pub struct Expr<'a> {
   pub loc: Loc,
   pub ty: Cell<Ty<'a>>,
   pub kind: ExprKind<'a>,
+  pub scope: RefCell<Scope<'a>>,
 }
 
 #[derive(derive_more::From)]
@@ -233,8 +271,16 @@ pub struct ClassCast<'a> {
 }
 
 pub struct Lambda<'a> {
+  pub name: String,
+  pub loc: Loc,
   pub param: Vec<&'a VarDef<'a>>,
-  pub body: Either<Box<Expr<'a>>, Block<'a>>, 
+  pub body: Either<Box<Expr<'a>>, Block<'a>>,
+  pub ret_param_ty: Cell<Option<&'a [Ty<'a>]>>,
+  pub scope: RefCell<Scope<'a>>,
+}
+
+impl<'a> Lambda<'a> {
+  pub fn ret_ty(&self) -> Ty<'a> { self.ret_param_ty.get().unwrap_or(&[Ty::var()])[0] }
 }
 
 // some unit struct, they exist just to make match pattern consistent(all patterns are like Xxx(x))

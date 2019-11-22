@@ -410,7 +410,7 @@ impl<'p> Parser<'p> {
 
   #[rule(Lambda -> Fun LPar ParamListOrEmpty RPar LambdaFunc)]
   fn lambda(_f: Token, _l: Token, l: Vec<&'p VarDef<'p>>, _r: Token, body: Either<Box<Expr<'p>>, Block<'p>>) -> Expr<'p> {
-    mk_expr(_f.loc(), Lambda { param: l.reversed(), body }.into())  
+    mk_expr(_f.loc(), Lambda { name: format!("lambda@{:?}", _f.loc()), loc: _f.loc(), param: l.reversed(), body, ret_param_ty: dft(), scope: dft() }.into())  
   }
   #[rule(LambdaFunc -> RightArrow Expr)]
   fn expr_lambda(_ra: Token, e: Expr<'p>) -> Either<Box<Expr<'p>>, Block<'p>> { Left(Box::new(e)) }

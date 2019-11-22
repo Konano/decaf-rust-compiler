@@ -42,6 +42,7 @@ pub enum ErrorKind<'a, Ty> {
   IntTooLarge(&'a str),
   UnrecognizedChar(char),
   SyntaxError,
+  AbstractMainClass,
   ConflictDeclaration { prev: Loc, name: &'a str },
   NoSuchClass(&'a str),
   CyclicInheritance,
@@ -71,6 +72,15 @@ pub enum ErrorKind<'a, Ty> {
   IndexNotArray,
   IndexNotInt,
   NoReturn,
+  NewAbstractClass(&'a str),
+  NotOverrideAllAbstract(&'a str),
+  VoidParam,
+  NotCallable(Ty),
+  LambdaArgcMismatch { expect: u32, actual: u32 },
+  AssignToMethod(&'a str),
+  MissingReturnStatement,
+  IncompatibleTypes,
+  AssignErrorInLambda,
 }
 
 impl<Ty: fmt::Debug> fmt::Debug for ErrorKind<'_, Ty> {
@@ -83,6 +93,7 @@ impl<Ty: fmt::Debug> fmt::Debug for ErrorKind<'_, Ty> {
       IntTooLarge(s) => write!(f, "integer literal {} is too large", s),
       UnrecognizedChar(ch) => write!(f, "unrecognized character '{}'", ch),
       SyntaxError => write!(f, "syntax error"),
+      AbstractMainClass => write!(f, "no legal Main class named 'Main' was found"),
       ConflictDeclaration { prev, name } => write!(f, "declaration of '{}' here conflicts with earlier declaration at {:?}", name, prev),
       NoSuchClass(name) => write!(f, "class '{}' not found", name),
       CyclicInheritance => write!(f, "illegal class inheritance (should be acyclic)"),
@@ -112,6 +123,15 @@ impl<Ty: fmt::Debug> fmt::Debug for ErrorKind<'_, Ty> {
       IndexNotArray => write!(f, "[] can only be applied to arrays"),
       IndexNotInt => write!(f, "array subscript must be an integer"),
       NoReturn => write!(f, "missing return statement: control reaches end of non-void block"),
+      NewAbstractClass(name) => write!(f, "cannot instantiate abstract class '{}'", name),
+      NotOverrideAllAbstract(name) => write!(f, "'{}' is not abstract and does not override all abstract methods", name),
+      VoidParam => write!(f, "arguments in function type must be non-void known type"),
+      NotCallable(ty) => write!(f, "{:?} is not a callable type", ty),
+      LambdaArgcMismatch { expect, actual } => write!(f, "lambda expression expects {} argument(s) but {} given", expect, actual),
+      AssignToMethod(name) => write!(f, "cannot assign value to class member method '{}'", name),
+      MissingReturnStatement => write!(f, "missing return statement: control reaches end of non-void block"),
+      IncompatibleTypes => write!(f, "incompatible return types in blocked expression"),
+      AssignErrorInLambda => write!(f, "cannot assign value to captured variables in lambda expression"),
     }
   }
 }
