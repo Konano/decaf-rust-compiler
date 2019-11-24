@@ -26,7 +26,7 @@
 
 简单来说就是 Type 开头为 SimpleType，再加上交替而接的 Parameter 和 ArrayDim。
 
-![type](assets/type-1572175436161.png)
+![type](assets/type.png)
 
 #### Lambda 表达式
 
@@ -51,7 +51,7 @@
 
 这里处理了左递归，先判断是否为空，再依次添加。
 
-![Lambda](D:/Workplace/decaf-2017011474/assert/lambda.png)
+![Lambda](./assets/lambda.png)
 
 #### 函数调用
 
@@ -85,7 +85,7 @@
 + ParaOrDimHalfLBrk ->
 ```
 
-![Call](D:/Workplace/decaf-2017011474/assert/call.png)
+![Call](./assets/call.png)
 
 ### 任务二：错误恢复
 

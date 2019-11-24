@@ -1,0 +1,20 @@
+digraph finite_state_machine {
+	rankdir=LR;
+	size="10,8"
+	node [shape = circle];
+	program -> class_def;
+	class_def -> block;
+	block -> stmt;
+	stmt -> expr;
+	stmt -> block;
+	stmt -> stmt;
+	expr -> var_sel;
+	expr -> expr;
+	expr -> call;
+	expr -> lambda;
+	lambda -> block;
+	lambda -> lambda;
+	call -> call;
+	call -> expr;
+	call -> lambda;
+}
