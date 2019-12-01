@@ -353,7 +353,6 @@ impl<'a> TypePass<'a> {
       else { false }
     }).map(|v| *v);
     let cap = self.alloc.def.alloc_extend(cap);
-    println!("{:?}, {}, {}", f.loc, cap.len(), f.param.len());
     self.cap_this |= __cap_this;
     f.cap.set((Some(cap), self.cap_this));
     f.id.set(self.cur_lambda_cnt);
