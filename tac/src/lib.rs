@@ -168,3 +168,4 @@ pub const NEW_ARR_NEG: &str = r#"Decaf runtime error: Cannot create negative-siz
 pub const BAD_CAST1: &str = r#"Decaf runtime error: "#;
 pub const BAD_CAST2: &str = r#" cannot be cast to "#;
 pub const BAD_CAST3: &str = r#"\n"#;
+pub const DIV_ZRRO: &str = r#"Decaf runtime error: Division by zero error\n"#;

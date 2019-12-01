@@ -1,0 +1,15 @@
+class Main {
+    static void main() {
+        new Main().foo();
+    }
+
+    int(int)(int(int)(int(int))) fix;
+    void foo() {
+        // need to capture `fix` by reference, so we make it a class field
+        fix = fun(int(int)(int(int)) f) => f(fun (int x) => fix(f)(x));
+        int(int) fac = fix(fun(int(int) f) => fun(int n) {
+            if (n == 0) return 1; else return n * f(n - 1);
+        });
+        Print(fac(10));
+    }
+}

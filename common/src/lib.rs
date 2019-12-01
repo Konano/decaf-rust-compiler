@@ -13,6 +13,7 @@ pub const MAIN_METHOD: &str = "main";
 pub const LENGTH: &str = "length";
 const INDENT: u32 = 4;
 const INDENT_STR: &str = "    ";
+pub const MAX_UINT: u32 = 4294967295;
 
 // DefaultHashBuilder is the default hash of hashbrown, seems faster than RandomState (the default hash of IndexMap/Set & std HashMap/Set)
 // place these type alias here just for convenience

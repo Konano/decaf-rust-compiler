@@ -3,7 +3,7 @@ mod symbol_pass;
 mod type_pass;
 
 use common::{Errors, ErrorKind::*, Ref, Loc};
-use syntax::{FuncDef, ClassDef, SynTy, SynTyKind, ScopeOwner, Ty, TyKind, Program, VarDef, Lambda};
+use syntax::{FuncDef, ClassDef, VarDef, SynTy, SynTyKind, ScopeOwner, Ty, TyKind, Program, Lambda};
 use typed_arena::Arena;
 use std::ops::{Deref, DerefMut};
 use crate::{symbol_pass::SymbolPass, type_pass::TypePass, scope_stack::ScopeStack};
@@ -12,10 +12,11 @@ use crate::{symbol_pass::SymbolPass, type_pass::TypePass, scope_stack::ScopeStac
 #[derive(Default)]
 pub struct TypeCkAlloc<'a> {
   pub ty: Arena<Ty<'a>>,
+  pub def: Arena<&'a VarDef<'a>>,
 }
 
 pub fn work<'a>(p: &'a Program<'a>, alloc: &'a TypeCkAlloc<'a>) -> Result<(), Errors<'a, Ty<'a>>> {
-  let mut s = SymbolPass(TypeCk { errors: Errors(vec![]), scopes: ScopeStack::new(p), loop_cnt: 0, cur_used: false, cur_idx: false, cur_func: None, cur_lambda: None, cur_class: None, cur_var_def: None, cur_assign: None, cur_def: vec![], alloc });
+  let mut s = SymbolPass(TypeCk { errors: Errors(vec![]), scopes: ScopeStack::new(p), loop_cnt: 0, cur_used: false, cur_idx: false, cur_func: None, cur_lambda: None, cur_class: None, cur_var_def: None, cur_assign: None, cur_def: vec![], alloc, cap: vec![], cur_lambda_cnt: 0, cap_this: false });
   s.program(p);
   if !s.errors.0.is_empty() { return Err(s.0.errors.sorted()); }
   let mut t = TypePass(s.0);
@@ -42,6 +43,9 @@ struct TypeCk<'a> {
   // this can reject code like `int a = a;`
   cur_var_def: Option<&'a VarDef<'a>>,
   alloc: &'a TypeCkAlloc<'a>,
+  cur_lambda_cnt: u32,
+  cap: Vec<&'a VarDef<'a>>,
+  cap_this: bool,
 }
 
 impl<'a> TypeCk<'a> {

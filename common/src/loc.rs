@@ -3,7 +3,7 @@ use std::fmt;
 // Loc(line, column), counting from 1
 // so 0 is invalid for both, and Loc(0, 0) means NO_LOC
 // (of course we can use Option<Loc>, but I think NO_LOC is also convenient to use, and it saves space)
-#[derive(Copy, Clone, Eq, PartialEq, Default, Ord, PartialOrd)]
+#[derive(Copy, Clone, Eq, PartialEq, Default, Ord, PartialOrd, Hash)]
 pub struct Loc(pub u32, pub u32);
 
 pub const NO_LOC: Loc = Loc(0, 0);

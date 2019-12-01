@@ -101,9 +101,9 @@ fn merge_idx_id_call<'p>(mut l: Expr<'p>, ts: Vec<IndexOrIdOrCall<'p>>) -> Expr<
       IndexOrIdOrCall::Index(loc, idx) =>
         l = mk_expr(loc, IndexSel { arr: Box::new(l), idx: Box::new(idx) }.into()),
       IndexOrIdOrCall::Id(loc, name) =>
-        l = mk_expr(loc, VarSel { owner: Some(Box::new(l)), name, var: dft() }.into()),
+        l = mk_expr(loc, VarSel { owner: Some(Box::new(l)), name, var: dft(), func: dft() }.into()),
       IndexOrIdOrCall::Call(loc, arg) =>
-        l = mk_expr(loc, Call { func: Box::new(l), arg, func_ref: dft() }.into())
+        l = mk_expr(loc, Call { func: Box::new(l), arg, func_ref: dft(), var_ref: dft(), ret: dft() }.into())
     }
   }
   l
@@ -240,18 +240,18 @@ impl<'p> Parser<'p> {
   #[rule(FieldDef -> Abstract Type Id LPar VarDefListOrEmpty RPar Semi)]
   fn filed_def_f2(&self, _ab: Token, ret: SynTy<'p>, name: Token, _l: Token, param: Vec<&'p VarDef<'p>>, _r: Token, _s: Token) -> FieldDef<'p> {
     let (loc, name) = (name.loc(), name.str());
-    FieldDef::FuncDef(self.alloc.func.alloc(FuncDef { loc, name, ret, param: param.reversed(), static_: false, abstract_: true, body: None, ret_param_ty: dft(), class: dft(), scope: dft() }))
+    FieldDef::FuncDef(self.alloc.func.alloc(FuncDef { loc, name, ret, param: param.reversed(), static_: false, abstract_: true, body: None, ret_param_ty: dft(), class: dft(), scope: dft(), owner: dft() }))
   }
   #[rule(FieldDef -> Static Type Id LPar VarDefListOrEmpty RPar Block)]
   fn filed_def_f1(&self, _s: Token, ret: SynTy<'p>, name: Token, _l: Token, param: Vec<&'p VarDef<'p>>, _r: Token, body: Block<'p>) -> FieldDef<'p> {
     let (loc, name) = (name.loc(), name.str());
-    FieldDef::FuncDef(self.alloc.func.alloc(FuncDef { loc, name, ret, param: param.reversed(), static_: true, abstract_: false, body: Some(body), ret_param_ty: dft(), class: dft(), scope: dft() }))
+    FieldDef::FuncDef(self.alloc.func.alloc(FuncDef { loc, name, ret, param: param.reversed(), static_: true, abstract_: false, body: Some(body), ret_param_ty: dft(), class: dft(), scope: dft(), owner: dft() }))
   }
   #[rule(FieldDef -> Type Id FuncOrVar)]
   fn filed_def_fv(&self, syn_ty: SynTy<'p>, name: Token, fov: Option<(Vec<&'p VarDef<'p>>, Block<'p>)>) -> FieldDef<'p> {
     let (loc, name) = (name.loc(), name.str());
     if let Some((param, body)) = fov {
-      FieldDef::FuncDef(self.alloc.func.alloc(FuncDef { loc, name, ret: syn_ty, param: param.reversed(), static_: false, abstract_: false, body: Some(body), ret_param_ty: dft(), class: dft(), scope: dft() }))
+      FieldDef::FuncDef(self.alloc.func.alloc(FuncDef { loc, name, ret: syn_ty, param: param.reversed(), static_: false, abstract_: false, body: Some(body), ret_param_ty: dft(), class: dft(), scope: dft(), owner: dft() }))
     } else {
       FieldDef::VarDef(self.alloc.var.alloc(VarDef { loc, name, syn_ty: Some(syn_ty), init: None, ty: dft(), owner: dft() }))
     }
@@ -410,7 +410,7 @@ impl<'p> Parser<'p> {
 
   #[rule(Lambda -> Fun LPar ParamListOrEmpty RPar LambdaFunc)]
   fn lambda(_f: Token, _l: Token, l: Vec<&'p VarDef<'p>>, _r: Token, body: Either<Box<Expr<'p>>, Block<'p>>) -> Expr<'p> {
-    mk_expr(_f.loc(), Lambda { name: format!("lambda@{:?}", _f.loc()), loc: _f.loc(), param: l.reversed(), body, ret_param_ty: dft(), scope: dft() }.into())  
+    mk_expr(_f.loc(), Lambda { name: format!("lambda@{:?}", _f.loc()), loc: _f.loc(), param: l.reversed(), body, ret_param_ty: dft(), scope: dft(), cap: dft(), id: dft() }.into())  
   }
   #[rule(LambdaFunc -> RightArrow Expr)]
   fn expr_lambda(_ra: Token, e: Expr<'p>) -> Either<Box<Expr<'p>>, Block<'p>> { Left(Box::new(e)) }
@@ -526,7 +526,7 @@ impl<'p> Parser<'p> {
     mk_expr(i.loc(), ClassTest { expr: Box::new(expr), name: name.str(), class: dft() }.into())
   }
   #[rule(Expr9 -> Id)]
-  fn expr9_id(name: Token) -> Expr<'p> { mk_expr(name.loc(), VarSel { owner: None, name: name.str(), var: dft() }.into()) }
+  fn expr9_id(name: Token) -> Expr<'p> { mk_expr(name.loc(), VarSel { owner: None, name: name.str(), var: dft(), func: dft() }.into()) }
   #[rule(Expr9 -> New NewClassOrArray)]
   fn expr9_new(n: Token, noa: NewClassOrArray<'p>) -> Expr<'p> {
     let loc = n.loc();

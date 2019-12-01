@@ -108,7 +108,10 @@ impl<'a> SymbolPass<'a> {
         _ => self.issue(f.loc, ConflictDeclaration { prev: sym.loc(), name: f.name }),
       }
     } else { true };
-    if ok { self.scopes.declare(Symbol::Func(f)); }
+    if ok { 
+      f.owner.set(Some(self.scopes.cur_owner()));
+      self.scopes.declare(Symbol::Func(f)); 
+    }
   }
 
   fn var_def(&mut self, v: &'a VarDef<'a>) {

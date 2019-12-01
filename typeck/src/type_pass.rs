@@ -1,5 +1,5 @@
 use crate::{TypeCk, TypeCkTrait};
-use common::{ErrorKind::*, Loc, LENGTH, BinOp, UnOp, ErrorKind, Ref};
+use common::{ErrorKind::*, Loc, LENGTH, BinOp, UnOp, ErrorKind, Ref, HashSet};
 use syntax::ast::*;
 use syntax::{ScopeOwner, Symbol, ty::*};
 use std::{ops::{Deref, DerefMut}, iter};
@@ -247,7 +247,10 @@ impl<'a> TypePass<'a> {
               var.ty.get()
             }
             Symbol::Class(c) => Ty::mk_class(c),
-            Symbol::Func(f) => Ty::mk_func(f),
+            Symbol::Func(f) => {
+              v.func.set(Some(f));
+              Ty::mk_func(f)
+            }
             _ => self.issue(loc, BadFieldAccess { name: v.name, owner }),
           }
         } else { self.issue(loc, NoSuchField { name: v.name, owner }) },
@@ -255,6 +258,7 @@ impl<'a> TypePass<'a> {
           match sym {
             Symbol::Class(c) => Ty::mk_class(c),
             Symbol::Func(f) => {
+              v.func.set(Some(f));
               if f.static_ { Ty::mk_func(f) } else { self.issue(loc, BadFieldAccess { name: v.name, owner }) }
             }
             _ => self.issue(loc, BadFieldAccess { name: v.name, owner }),
@@ -273,6 +277,14 @@ impl<'a> TypePass<'a> {
       if let Some(sym) = self.scopes.lookup_before(v.name, self.cur_var_def.map(|v| v.loc).unwrap_or(loc)) {
         match sym {
           Symbol::Var(var) => {
+            if self.in_lambda() { 
+              match var.owner.get().unwrap() {
+                ScopeOwner::Lambda(_) if var.loc < self.cur_lambda.unwrap().loc => {
+                  self.cap.push(var); 
+                }
+                _ => { self.cap.push(var); }
+              }
+            }
             if self.is_lvalue(loc) && 
                self.in_lambda() && 
                !self.cur_used && 
@@ -283,7 +295,7 @@ impl<'a> TypePass<'a> {
               let _loc = self.cur_assign.unwrap();
               self.issue(_loc, AssignErrorInLambda)
             }
-            if self.is_rvalue(loc) && self.cur_def.iter().any(|_loc| *_loc == var.loc) {
+            else if self.is_rvalue(loc) && self.cur_def.iter().any(|_loc| *_loc == var.loc) {
               self.issue(loc, UndeclaredVar(v.name))
             } else {
               v.var.set(Some(var));
@@ -297,12 +309,14 @@ impl<'a> TypePass<'a> {
             }
           }
           Symbol::Class(c) if self.cur_used => { Ty::mk_class(c) }
-          Symbol::Func(c) => {
+          Symbol::Func(f) => {
+            self.cap_this = true;
             let cur = self.cur_func.unwrap();
-            if cur.static_ && !c.static_ {
+            if cur.static_ && !f.static_ {
               self.issue(loc, RefInStatic { field: v.name, func: cur.name })
             }
-            Ty::mk_func(c)
+            v.func.set(Some(f));
+            Ty::mk_func(f)
           }
           _ => self.issue(loc, UndeclaredVar(v.name)),
         }
@@ -311,8 +325,15 @@ impl<'a> TypePass<'a> {
   }
 
   fn lambda(&mut self, f: &'a Lambda<'a>) -> Ty<'a> {
+    if self.cur_lambda.is_none() {
+      self.cap.clear();
+      self.cap_this = false;
+    }
+    let cap_begin = self.cap.len();
     let _cur_lambda = self.cur_lambda;
     self.cur_lambda = Some(f);
+    let _cap_this = self.cap_this;
+    self.cap_this = false;
     self.scoped(ScopeOwner::Lambda(f), |s| {
       let ret_ty = if f.body.is_left() {
         (true, s.expr(f.body.as_ref().left().unwrap()))
@@ -323,7 +344,22 @@ impl<'a> TypePass<'a> {
       let ret_param_ty = s.alloc.ty.alloc_extend(ret_param_ty);
       f.ret_param_ty.set(Some(ret_param_ty));
     });
+    let mut __cap_this = false;
+    let mut m = HashSet::new();
+    let cap = self.cap.iter().skip(cap_begin).filter(|v| {
+      if (v.owner.get().unwrap().is_lambda() || v.owner.get().unwrap().is_local()) && f.loc < v.loc { false } 
+      else if v.owner.get().unwrap().is_class() { __cap_this = true; false }
+      else if m.get(&v.loc).is_none() { m.insert(v.loc); true }
+      else { false }
+    }).map(|v| *v);
+    let cap = self.alloc.def.alloc_extend(cap);
+    println!("{:?}, {}, {}", f.loc, cap.len(), f.param.len());
+    self.cap_this |= __cap_this;
+    f.cap.set((Some(cap), self.cap_this));
+    f.id.set(self.cur_lambda_cnt);
+    self.cur_lambda_cnt += 1;
     self.cur_lambda = _cur_lambda;
+    self.cap_this |= _cap_this;
     Ty::mk_lambda(f)
   }
 
@@ -345,38 +381,26 @@ impl<'a> TypePass<'a> {
           owner
         } else if let Some(sym) = self.scopes.lookup_before(v.name, self.cur_var_def.map(|v| v.loc).unwrap_or(loc)) {
           match sym {
-            Symbol::Var(var) => {
-              // v.var.set(Some(var));
-              // if var.owner.get().unwrap().is_class() {
-              //   unimplemented!()
-              //   // let cur = self.cur_func.unwrap();
-              //   // if cur.static_ {
-              //   //   self.issue(loc, RefInStatic { field: v.name, func: cur.name })
-              //   // }
-              // }
+            Symbol::Var(var) => { // a(), a is var
+              if self.in_lambda() { 
+                match var.owner.get().unwrap() { // TODO:
+                  ScopeOwner::Lambda(_) if var.loc < self.cur_lambda.unwrap().loc => {
+                    self.cap.push(var);
+                  }
+                  _ => { self.cap.push(var); }
+                }
+              }
+              c.var_ref.set(Some(var));
               return match var.ty.get().kind {
                 TyKind::Lambda(_v) | TyKind::Func(_v) => self.check_arg_param(&c.arg, _v, v.name, loc),
                 TyKind::Var | TyKind::Error => Ty::error(),
                 _ => self.issue(loc, NotCallable(var.ty.get()))
               }
-              // return if let TyKind::Func(v) = var.ty.get().kind {
-                // self.check_lambda_arg_param(&c.arg, v, loc)
-                // let ret = if v.len() - 1 != c.arg.len() {
-                  // for idx in 1..(v.len()-1) {
-                  //   if !v.get(idx).is_none() {
-                  //     if v.get(idx).unwrap(){
-                        
-                  //     }
-                  //   }
-                  // }
-                  
-                  // self.issue(loc, LambdaArgcMismatch { expect: (v.len() - 1) as u32, actual: c.arg.len() as u32 })
-                // } else { v[0] };
-                // ret
-              // } else {
-              // }
             },
-            Symbol::Func(_) => Ty::mk_obj(self.cur_class.unwrap()),
+            Symbol::Func(_) => {
+              self.cap_this = true;
+              Ty::mk_obj(self.cur_class.unwrap())
+            }
             _ => Ty::error(), // Impossible
           }
         } else { Ty::error() };
@@ -384,7 +408,7 @@ impl<'a> TypePass<'a> {
           Ty { arr: 0, kind: TyKind::Object(Ref(cl)) } | Ty { arr: 0, kind: TyKind::Class(Ref(cl)) } => {
             if let Some(sym) = cl.lookup(v.name) {
               match sym {
-                Symbol::Func(f) => {
+                Symbol::Func(f) => { // A.a(), a is function
                   c.func_ref.set(Some(f));
                   if owner.is_class() && !f.static_ {
                     // Class.not_static_method()
@@ -398,7 +422,8 @@ impl<'a> TypePass<'a> {
                   }
                   self.check_arg_param(&c.arg, f.ret_param_ty.get().unwrap(), f.name, loc)
                 }
-                Symbol::Var(v) => {
+                Symbol::Var(v) => { // A.a(), a is var
+                  c.var_ref.set(Some(v));
                   match v.ty.get().kind {
                     TyKind::Lambda(_v) => self.check_lambda_arg_param(&c.arg, _v, loc),
                     TyKind::Var | TyKind::Error => Ty::error(),
@@ -418,19 +443,20 @@ impl<'a> TypePass<'a> {
           }
         }
       }
-      Lambda(f) => {
+      Lambda(f) => { // ~(), ~ is lambda
         self.lambda(f);
         self.check_lambda_arg_param(&c.arg, f.ret_param_ty.get().unwrap(), loc)
       }
-      Call(cl) => {
+      Call(cl) => { // ~(), ~ is call
         let ty = self.call(cl, c.func.loc);
+        c.ret.set(ty);
         match &ty.kind {
           TyKind::Lambda(v) | TyKind::Func(v) => self.check_lambda_arg_param(&c.arg, v, loc),
           TyKind::Var | TyKind::Error => Ty::error(),
           _ => self.issue(loc, NotCallable(ty)),
         }
       }
-      IndexSel(i) => { 
+      IndexSel(i) => { // ~[5](), ~ is call
         let ty = self.expr(i.arr.as_ref());
         if ty.arr == 0 { return Ty::error() }
         self.expr(i.idx.as_ref());
@@ -448,16 +474,12 @@ impl<'a> TypePass<'a> {
         let r = self.expr(&u.r);
         let (ty, op) = match u.op { UnOp::Neg => (Ty::int(), "-"), UnOp::Not => (Ty::bool(), "!"), };
         if r != ty { r.error_or(|| self.issue(loc, IncompatibleUnary { op, r })) }
-        match &ty.kind {
-          TyKind::Lambda(v) | TyKind::Func(v) => self.check_lambda_arg_param(&c.arg, v, loc),
-          TyKind::Var | TyKind::Error => Ty::error(),
-          _ => self.issue(loc, NotCallable(ty)),
-        }
+        self.issue(loc, NotCallable(ty))
       }
       Binary(b) => {
         use BinOp::*;
         let (l, r) = (self.expr(&b.l), self.expr(&b.r));
-        if l.kind == TyKind::Error || r.kind == TyKind::Error {
+        let ret = if l.kind == TyKind::Error || r.kind == TyKind::Error {
           // not using wildcard match, so that if we add new operators in the future, compiler can tell us
           match b.op { Add | Sub | Mul | Div | Mod => Ty::int(), And | Or | Eq | Ne | Lt | Le | Gt | Ge => Ty::bool() }
         } else {
@@ -470,8 +492,9 @@ impl<'a> TypePass<'a> {
           if !ok { 
             self.issue(loc, IncompatibleBinary { l, op: b.op.to_op_str(), r }) 
           }
-          self.issue(loc, NotCallable(ret))
-        }
+          ret
+        };
+        self.issue(loc, NotCallable(ret))
       }
       This(_) => {
         let ret = self.cur_class.unwrap();

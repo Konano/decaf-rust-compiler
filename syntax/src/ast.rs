@@ -40,26 +40,6 @@ impl<'a> ClassDef<'a> {
     }
   }
 
-  // pub fn clone(&self) -> ClassDef<'a> {
-  //   ClassDef { 
-  //     loc: self.loc,
-  //     name: self.name,
-  //     abstract_: self.abstract_,
-  //     parent: self.parent,
-  //     field: self.field,
-  //     parent_ref: self.parent_ref,
-  //     scope: self.scope,
-  //   }
-  // }
-
-  // pub fn combine(&self, rhs: &ClassDef<'a>) -> Option<&ClassDef<'a>> {
-  //   let mut c = self;
-  //   loop {
-  //     if rhs.extends(c) { break Some(c); }
-  //     if let Some(p) = c.parent_ref.get() { c = p; } else { break None; }
-  //   }
-  // }
-
   pub fn ab_unoverload(&self) -> Vec<(&'a str, Ty<'a>)> {
     let mut ab = if let Some(p) = self.parent_ref.get() { p.ab_unoverload() } else { vec![] };
     for f in self.field.iter() { 
@@ -118,6 +98,7 @@ pub struct FuncDef<'a> {
   // `class` will always be set during typeck (no matter whether it is static)
   pub class: Cell<Option<&'a ClassDef<'a>>>,
   pub scope: RefCell<Scope<'a>>,
+  pub owner: Cell<Option<ScopeOwner<'a>>>,
 }
 
 impl<'a> FuncDef<'a> {
@@ -222,6 +203,7 @@ pub struct VarSel<'a> {
   pub owner: Option<Box<Expr<'a>>>,
   pub name: &'a str,
   pub var: Cell<Option<&'a VarDef<'a>>>,
+  pub func: Cell<Option<&'a FuncDef<'a>>>,
 }
 
 pub struct IndexSel<'a> {
@@ -235,6 +217,8 @@ pub struct Call<'a> {
   pub func: Box<Expr<'a>>,
   pub arg: Vec<Expr<'a>>,
   pub func_ref: Cell<Option<&'a FuncDef<'a>>>,
+  pub var_ref: Cell<Option<&'a VarDef<'a>>>,
+  pub ret: Cell<Ty<'a>>,
 }
 
 pub struct Binary<'a> {
@@ -277,6 +261,8 @@ pub struct Lambda<'a> {
   pub body: Either<Box<Expr<'a>>, Block<'a>>,
   pub ret_param_ty: Cell<Option<&'a [Ty<'a>]>>,
   pub scope: RefCell<Scope<'a>>,
+  pub cap: Cell<(Option<&'a [&'a VarDef<'a>]>, bool)>,
+  pub id: Cell<u32>,
 }
 
 impl<'a> Lambda<'a> {
