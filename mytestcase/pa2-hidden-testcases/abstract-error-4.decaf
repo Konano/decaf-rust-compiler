@@ -1,0 +1,56 @@
+abstract class AA {
+    int u;
+    abstract void a();
+    abstract void b(bool a);
+    abstract void c();
+    abstract void d();
+}
+
+abstract class BB extends AA {
+    void a() { Print("BB.a()"); }
+    abstract void b(bool b);
+    void e() { Print("BB.e()"); }
+    abstract void f();
+    int gg;
+}
+
+class CC extends BB {
+    void b(bool c) { Print("CC.b()"); }
+    void c() { Print("CC.c()"); }
+    void f() { Print("CC.f()"); }
+}
+
+abstract class DD extends CC {
+    abstract void a();
+    abstract void b(bool d);
+    static void c() { Print("DD.c()"); }
+    int f() { Print("DD.f"); }
+    abstract int g(string x, bool[][] y);
+    abstract class CC h(class DD d, class EE e);
+}
+
+class EE extends DD {
+    int v;
+    void a() { Print("EE.a()"); }
+    static void c() { Print("EE.c()"); }
+    int g(string x, bool[][] x) { Print("EE.g()"); }
+}
+
+abstract class FF extends EE {
+    abstract class FF h(class AA a, class BB b);
+}
+
+class Main extends EE {
+    void a() { Print("Main.a()"); }
+    void b(bool e) { Print("Main.b()"); }
+    void d() { Print("Main.d()"); }
+    int g(string x, bool[][] y) { Print("Main.g()"); }
+    class DD h(class BB b, class CC c) { Print("Main.h()"); }
+    static void main() {
+        class AA a = new AA();
+        class BB b = new BB();
+        class CC c = new CC();
+        class DD d = new DD();
+        class EE e = new EE();
+    }
+}

@@ -1,0 +1,29 @@
+class ConcreteClass extends AbstractClass {
+    int x() { return 1; }
+    int y() { return value; }
+    int z() { return 3; }
+    int w() { return z(); }
+}
+
+abstract class AbstractClass {
+    abstract int x();
+    static void s() { }
+    int z() { return 0; }
+    int value;
+    string str;
+}
+
+class Main {
+    static void main() {
+        class AbstractClass b = new ConcreteClass();
+        class AbstractClass a = new AbstractClass();
+        class AbstractClass[] aa = new class AbstractClass[10];
+        aa[0] = a;
+        aa[1] = b;
+        class ConcreteClass[] bb = new class ConcreteClass[0];
+        bb[0] = a;
+        bb[1] = b;
+        bb[2] = (class ConcreteClass) a;
+        bb[3] = (class ConcreteClass) b;
+    }
+}

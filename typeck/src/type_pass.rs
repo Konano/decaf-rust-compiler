@@ -50,10 +50,11 @@ impl<'a> TypePass<'a> {
   fn stmt(&mut self, s: &'a Stmt<'a>) -> (bool, Ty<'a>) {
     match &s.kind {
       StmtKind::Assign(a) => {
+        let _cur_assign = self.cur_assign;
         self.cur_assign = Some(s.loc);
         let l = self.expr(&a.dst);
         let r = self.expr(&a.src);
-        self.cur_assign = None;
+        self.cur_assign = _cur_assign;
         if !r.assignable_to(l) { 
           self.issue(s.loc, IncompatibleBinary { l, op: "=", r }) 
         } else if l.is_func() {
@@ -68,9 +69,10 @@ impl<'a> TypePass<'a> {
         self.cur_def.push(v.loc);
         if let Some((loc, e)) = &v.init {
           let l = v.ty.get();
+          let _cur_assign = self.cur_assign;
           self.cur_assign = Some(s.loc);
           let r = self.expr(e);
-          self.cur_assign = None;
+          self.cur_assign = _cur_assign;
           if l.kind == TyKind::Var { 
             if r.kind == TyKind::Void {
               self.issue(v.loc, VoidVar(v.name))
@@ -79,7 +81,7 @@ impl<'a> TypePass<'a> {
             self.issue(*loc, IncompatibleBinary { l, op: "=", r }) 
           } else {
             match r.kind { 
-              TyKind::Object(Ref(c)) => if c.abstract_ {
+              TyKind::Object(Ref(c)) => if c.abstract_ && r.arr == 0 {
                 self.issue(e.loc, NewAbstractClass(c.name)) 
               }, 
               _ => {}, 
@@ -382,11 +384,17 @@ impl<'a> TypePass<'a> {
           match sym {
             Symbol::Var(var) => { // a(), a is var
               if self.in_lambda() { 
-                match var.owner.get().unwrap() { // TODO:
+                match var.owner.get().unwrap() {
                   ScopeOwner::Lambda(_) if var.loc < self.cur_lambda.unwrap().loc => {
                     self.cap.push(var);
                   }
-                  _ => { self.cap.push(var); }
+                  _ => { 
+                    if self.is_rvalue(loc) && self.cur_def.iter().any(|_loc| *_loc == var.loc) { 
+                      self.issue(c.func.loc, UndeclaredVar(v.name))
+                    } else { 
+                      self.cap.push(var); 
+                    }
+                  }
                 }
               }
               c.var_ref.set(Some(var));

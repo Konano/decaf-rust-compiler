@@ -1,0 +1,8 @@
+*** Error at (17,1): 'CC' is not abstract and does not override all abstract methods
+*** Error at (24,19): declaration of 'a' here conflicts with earlier declaration at (10,10)
+*** Error at (25,19): declaration of 'b' here conflicts with earlier declaration at (18,10)
+*** Error at (26,17): declaration of 'c' here conflicts with earlier declaration at (19,10)
+*** Error at (27,9): overriding method 'f' doesn't match the type signature in class 'CC'
+*** Error at (32,1): 'EE' is not abstract and does not override all abstract methods
+*** Error at (35,17): declaration of 'c' here conflicts with earlier declaration at (19,10)
+*** Error at (36,30): declaration of 'x' here conflicts with earlier declaration at (36,18)

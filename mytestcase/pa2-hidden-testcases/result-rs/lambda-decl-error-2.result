@@ -1,0 +1,17 @@
+*** Error at (7,30): undeclared variable 'f'
+*** Error at (9,30): undeclared variable 'h'
+*** Error at (14,24): undeclared variable 'fib'
+*** Error at (14,37): undeclared variable 'fib'
+*** Error at (33,42): undeclared variable 'f5'
+*** Error at (34,42): undeclared variable 'f1'
+*** Error at (35,42): undeclared variable 'f2'
+*** Error at (36,42): undeclared variable 'f3'
+*** Error at (37,42): undeclared variable 'f4'
+*** Error at (38,42): undeclared variable 'h1'
+*** Error at (39,42): undeclared variable 'h2'
+*** Error at (40,42): undeclared variable 'h3'
+*** Error at (40,47): undeclared variable 'f3'
+*** Error at (41,42): undeclared variable 'h4'
+*** Error at (41,52): undeclared variable 'j4'
+*** Error at (44,33): incompatible operands: bool = int
+*** Error at (50,23): incompatible operands: string = void(int)

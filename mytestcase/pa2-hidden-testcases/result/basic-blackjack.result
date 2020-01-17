@@ -1,0 +1,296 @@
+GLOBAL SCOPE:
+    (1,1) -> class rndModule
+    (19,1) -> class Deck
+    (56,1) -> class BJDeck
+    (106,1) -> class Player
+    (223,1) -> class Dealer : Player
+    (248,1) -> class House
+    (325,1) -> class Main
+    CLASS SCOPE OF 'rndModule':
+        (3,9) -> variable seed : int
+        (5,10) -> function Init : int => void
+        (9,9) -> function Random : () => int
+        (14,9) -> function RndInt : int => int
+        FORMAL SCOPE OF 'Init':
+            (5,10) -> variable @this : class rndModule
+            (5,19) -> variable @seedVal : int
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'Random':
+            (9,9) -> variable @this : class rndModule
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'RndInt':
+            (14,9) -> variable @this : class rndModule
+            (14,20) -> variable @max : int
+            LOCAL SCOPE:
+                <empty>
+    CLASS SCOPE OF 'Deck':
+        (21,9) -> variable current : int
+        (22,11) -> variable cards : int[]
+        (23,21) -> variable rnd : class rndModule
+        (25,10) -> function Init : class rndModule => void
+        (30,10) -> function Shuffle : () => void
+        (46,9) -> function GetCard : () => int
+        FORMAL SCOPE OF 'Init':
+            (25,10) -> variable @this : class Deck
+            (25,31) -> variable @rnd : class rndModule
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'Shuffle':
+            (30,10) -> variable @this : class Deck
+            LOCAL SCOPE:
+                <empty>
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    (36,17) -> variable r : int
+                    (37,17) -> variable temp : int
+        FORMAL SCOPE OF 'GetCard':
+            (46,9) -> variable @this : class Deck
+            LOCAL SCOPE:
+                (47,13) -> variable result : int
+                LOCAL SCOPE:
+                    <empty>
+    CLASS SCOPE OF 'BJDeck':
+        (58,18) -> variable decks : class Deck[]
+        (59,9) -> variable numdealt : int
+        (60,21) -> variable rnd : class rndModule
+        (62,10) -> function Init : class rndModule => void
+        (72,9) -> function DealCard : () => int
+        (89,10) -> function Shuffle : () => void
+        (100,9) -> function NumCardsRemaining : () => int
+        FORMAL SCOPE OF 'Init':
+            (62,10) -> variable @this : class BJDeck
+            (62,31) -> variable @rnd : class rndModule
+            LOCAL SCOPE:
+                (63,13) -> variable i : int
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'DealCard':
+            (72,9) -> variable @this : class BJDeck
+            LOCAL SCOPE:
+                (73,13) -> variable c : int
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    (77,15) -> variable d : int
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+        FORMAL SCOPE OF 'Shuffle':
+            (89,10) -> variable @this : class BJDeck
+            LOCAL SCOPE:
+                (90,13) -> variable i : int
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'NumCardsRemaining':
+            (100,9) -> variable @this : class BJDeck
+            LOCAL SCOPE:
+                <empty>
+    CLASS SCOPE OF 'Player':
+        (107,9) -> variable total : int
+        (108,9) -> variable aces : int
+        (109,9) -> variable numcards : int
+        (110,9) -> variable bet : int
+        (111,9) -> variable money : int
+        (112,12) -> variable name : string
+        (114,10) -> function Init : int => void
+        (120,10) -> function Hit : class BJDeck => void
+        (134,10) -> function DoubleDown : class BJDeck => bool
+        (147,10) -> function TakeTurn : class BJDeck => void
+        (171,10) -> function HasMoney : () => bool
+        (175,10) -> function PrintMoney : () => void
+        (179,10) -> function PlaceBet : () => void
+        (188,9) -> function GetTotal : () => int
+        (192,10) -> function Resolve : int => void
+        (217,10) -> function GetYesOrNo : string => bool
+        FORMAL SCOPE OF 'Init':
+            (114,10) -> variable @this : class Player
+            (114,19) -> variable @num : int
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'Hit':
+            (120,10) -> variable @this : class Player
+            (120,27) -> variable @deck : class BJDeck
+            LOCAL SCOPE:
+                (121,13) -> variable card : int
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'DoubleDown':
+            (134,10) -> variable @this : class Player
+            (134,34) -> variable @deck : class BJDeck
+            LOCAL SCOPE:
+                (135,13) -> variable result : int
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'TakeTurn':
+            (147,10) -> variable @this : class Player
+            (147,32) -> variable @deck : class BJDeck
+            LOCAL SCOPE:
+                (148,14) -> variable stillGoing : bool
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+                        LOCAL SCOPE:
+                            <empty>
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'HasMoney':
+            (171,10) -> variable @this : class Player
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'PrintMoney':
+            (175,10) -> variable @this : class Player
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'PlaceBet':
+            (179,10) -> variable @this : class Player
+            LOCAL SCOPE:
+                <empty>
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'GetTotal':
+            (188,9) -> variable @this : class Player
+            LOCAL SCOPE:
+                <empty>
+        FORMAL SCOPE OF 'Resolve':
+            (192,10) -> variable @this : class Player
+            (192,22) -> variable @dealer : int
+            LOCAL SCOPE:
+                (193,13) -> variable win : int
+                (194,13) -> variable lose : int
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+                    LOCAL SCOPE:
+                        <empty>
+                        LOCAL SCOPE:
+                            <empty>
+                        LOCAL SCOPE:
+                            <empty>
+                            LOCAL SCOPE:
+                                <empty>
+                            LOCAL SCOPE:
+                                <empty>
+                                LOCAL SCOPE:
+                                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+                    LOCAL SCOPE:
+                        <empty>
+        FORMAL SCOPE OF 'GetYesOrNo':
+            (217,10) -> variable @this : class Player
+            (217,28) -> variable @prompt : string
+            LOCAL SCOPE:
+                <empty>
+    CLASS SCOPE OF 'Dealer':
+        (225,10) -> function Init : int => void
+        (234,10) -> function TakeTurn : class BJDeck => void
+        FORMAL SCOPE OF 'Init':
+            (225,10) -> variable @this : class Dealer
+            (225,19) -> variable @id : int
+            LOCAL SCOPE:
+                (226,16) -> variable s : string
+        FORMAL SCOPE OF 'TakeTurn':
+            (234,10) -> variable @this : class Dealer
+            (234,32) -> variable @deck : class BJDeck
+            LOCAL SCOPE:
+                <empty>
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+                LOCAL SCOPE:
+                    <empty>
+    CLASS SCOPE OF 'House':
+        (249,20) -> variable players : class Player[]
+        (250,18) -> variable dealer : class Dealer
+        (251,18) -> variable deck : class BJDeck
+        (253,10) -> function SetupGame : () => void
+        (267,10) -> function SetupPlayers : () => void
+        (279,10) -> function TakeAllBets : () => void
+        (287,10) -> function TakeAllTurns : () => void
+        (294,10) -> function ResolveAllPlayers : () => void
+        (303,10) -> function PrintAllMoney : () => void
+        (311,10) -> function PlayOneGame : () => void
+        FORMAL SCOPE OF 'SetupGame':
+            (253,10) -> variable @this : class House
+            LOCAL SCOPE:
+                (256,25) -> variable rnd : class rndModule
+        FORMAL SCOPE OF 'SetupPlayers':
+            (267,10) -> variable @this : class House
+            LOCAL SCOPE:
+                (268,13) -> variable i : int
+                (269,13) -> variable numPlayers : int
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'TakeAllBets':
+            (279,10) -> variable @this : class House
+            LOCAL SCOPE:
+                (280,13) -> variable i : int
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+        FORMAL SCOPE OF 'TakeAllTurns':
+            (287,10) -> variable @this : class House
+            LOCAL SCOPE:
+                (288,13) -> variable i : int
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+        FORMAL SCOPE OF 'ResolveAllPlayers':
+            (294,10) -> variable @this : class House
+            LOCAL SCOPE:
+                (295,13) -> variable i : int
+                LOCAL SCOPE:
+                    <empty>
+                    LOCAL SCOPE:
+                        <empty>
+        FORMAL SCOPE OF 'PrintAllMoney':
+            (303,10) -> variable @this : class House
+            LOCAL SCOPE:
+                (304,13) -> variable i : int
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'PlayOneGame':
+            (311,10) -> variable @this : class House
+            LOCAL SCOPE:
+                <empty>
+                LOCAL SCOPE:
+                    <empty>
+    CLASS SCOPE OF 'Main':
+        (326,17) -> STATIC function main : () => void
+        (343,17) -> STATIC function GetYesOrNo : string => bool
+        FORMAL SCOPE OF 'main':
+            <empty>
+            LOCAL SCOPE:
+                (327,14) -> variable keepPlaying : bool
+                (329,21) -> variable house : class House
+                LOCAL SCOPE:
+                    <empty>
+        FORMAL SCOPE OF 'GetYesOrNo':
+            (343,35) -> variable @prompt : string
+            LOCAL SCOPE:
+                <empty>

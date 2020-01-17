@@ -1,0 +1,3 @@
+*** Error at (19,33): cannot instantiate abstract class 'AbstractClass'
+*** Error at (24,15): incompatible operands: class ConcreteClass = class AbstractClass
+*** Error at (25,15): incompatible operands: class ConcreteClass = class AbstractClass
